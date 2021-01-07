@@ -46,7 +46,7 @@ def save_pdf(pdf_form):
     # random_hex = secrets.token_hex(8)
     f_namee, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_namee + f_ext
-    pdf_path = os.path.join('/app/static/user_pdf', pdf_fn)
+    pdf_path = os.path.join(app.root_path, 'app/static/user_pdf', pdf_fn)
     pdf_form.save(pdf_path)
 
     return pdf_path
