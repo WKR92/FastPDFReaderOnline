@@ -5,9 +5,6 @@ import os
 import secrets
 import re
 from pdfminer.high_level import extract_text
-from queue import Empty, Queue
-from apscheduler.schedulers.blocking import BlockingScheduler
-from flask_apscheduler import APScheduler
 import json
 import threading
 import time

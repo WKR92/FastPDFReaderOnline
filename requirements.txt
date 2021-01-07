@@ -1,2 +1,10 @@
 flask
 gunicorn
+flask_wtf
+flask_sqlalchemy
+pdfminer.high_level
+flask_session
+redis
+flask_wtf.file
+wtforms
+wtforms.validators
