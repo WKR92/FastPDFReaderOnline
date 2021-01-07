@@ -1,0 +1,37 @@
+{% extends "mainLayout.html" %}
+{% block content %}
+  <div id="icon">
+    <h1 class="text-center">Welcome to the place of run-reading online. Click the button below, choose your PDF file and start reading fast.</h1>
+    <br>
+    <div class=" mt-4">
+      <div class="">
+        <form method="POST" action="" enctype="multipart/form-data">
+            <div class="form-group text-center d-inline-block w-100">
+              {{ form.csrf_token }} 
+              {{ form.pdfFile.label() }}
+              {{ form.pdfFile(id="ChoosePDFbtn", class="form-control.file") }}
+              {% if form.pdfFile.errors %}
+                  {% for error in form.pdfFile.errors %}
+                    </br>
+                    <span class="text-danger">{{ error }}</span>
+                  {% endfor %}
+              {% endif %}
+            </div>
+            <div id="submit_div" class="form-group mb-4">
+              {{ form.submit(id="loadReact", class="d-block w-75 m-auto p-5 btn btn-info") }}    
+            </div>
+        </form>
+      </div>
+      <div class="">
+        <p class="text-center">If you have your save file ready you can go straight to the load screen:</p>
+      </div>
+      <div class="d-inline-block w-100">
+        <a class="", href="{{ url_for('loadReader') }}"><button class="d-block w-75 m-auto p-5 btn btn-info">Go to load screen</button></a>
+        <br>
+        <p class="d-block w-75 m-auto">Note: FastPDFReader does not work properly in Internet Explorer browser.</p>
+      </div>
+    </div>
+    <div>
+    </div>
+  </div>
+{% endblock content %}
