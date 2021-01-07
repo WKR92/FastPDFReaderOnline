@@ -4,3 +4,4 @@ flask_wtf
 flask_sqlalchemy
 pdfminer
 pdfminer.six
+selenium
