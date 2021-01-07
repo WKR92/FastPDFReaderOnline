@@ -7,6 +7,7 @@ import re
 from pdfminer.high_level import extract_text
 import json
 import time
+from selenium import webdriver
 
 
 
@@ -47,9 +48,10 @@ def save_pdf(pdf_form):
     f_namee, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_namee + f_ext
     pdf_path = os.path.join(app.root_path, 'app/static/user_pdf', pdf_fn)
-    pdf_form.save(pdf_path)
+    # pdf_form.save(pdf_path)
+    webdriver.execute_script("window.localStorage.setItem('pdf','pdf_form.save(pdf_path)');")
 
-    return pdf_path
+    # return pdf_path
 
 
 # def tittle_of_book(pdf_path):
@@ -141,7 +143,7 @@ def home():
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
-            pdf_file = save_pdf(form.pdfFile.data)
+            pdf_file = webdriver.execute_script("window.localStorage.getItem('pdf');")
             print(pdf_file)
             session['my_var'] = pdf_file
 
