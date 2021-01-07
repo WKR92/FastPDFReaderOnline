@@ -27,6 +27,8 @@ def create_app():
 
 app = create_app()
 
+browser = webdriver.Chrome()
+
 
 global raw_text
 raw_text = []
@@ -49,7 +51,7 @@ def save_pdf(pdf_form):
     pdf_fn = f_namee + f_ext
     pdf_path = os.path.join(app.root_path, 'app/static/user_pdf', pdf_fn)
     # pdf_form.save(pdf_path)
-    webdriver.execute_script("window.localStorage.setItem('pdf','pdf_form.save(pdf_path)');")
+    browser.execute_script("window.localStorage.setItem('pdf','pdf_form.save(pdf_path)');")
 
     # return pdf_path
 
@@ -143,7 +145,7 @@ def home():
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
-            pdf_file = webdriver.execute_script("window.localStorage.getItem('pdf');")
+            pdf_file = browser.execute_script("window.localStorage.getItem('pdf');")
             print(pdf_file)
             session['my_var'] = pdf_file
 
