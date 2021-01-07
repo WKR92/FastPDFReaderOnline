@@ -8,10 +8,6 @@ from pdfminer.high_level import extract_text
 import json
 import threading
 import time
-import concurrent.futures
-import atexit
-from flask_session import Session
-import redis
 
 
 
@@ -21,21 +17,14 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+    app.config['DATABASE_URL'] = 'sqlite:///site.db'
     # db = SQLAlchemy(app)
     db.init_app(app)
-    app.config['SESSION_TYPE'] = 'redis'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-    SESSION_REDIS = redis.from_url('redis://127.0.0.1:6379')
-    app.config["SESSION_PERMANENT"] = False
-    app.config["SESSION_MODIFIED"] = True
-    Session(app)
     return app
 
 
 app = create_app()
-app.app_context().push()
-sess = Session(app)
 
 
 global raw_text
