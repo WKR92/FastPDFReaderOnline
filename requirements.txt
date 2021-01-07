@@ -3,3 +3,4 @@ gunicorn
 flask_wtf
 flask_sqlalchemy
 pdfminer
+wtforms
