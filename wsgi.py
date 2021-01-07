@@ -1,3 +1,3 @@
-from run.py import create_app
+from run import create_app
 
 app = create_app()
