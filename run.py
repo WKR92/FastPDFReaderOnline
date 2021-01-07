@@ -18,6 +18,7 @@ def create_app():
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     # db = SQLAlchemy(app)
     db.init_app(app)
     return app
@@ -41,6 +42,7 @@ data = []
 
 
 def save_pdf(pdf_form):
+    # /app/static/user_pdf/
     # random_hex = secrets.token_hex(8)
     f_namee, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_namee + f_ext
