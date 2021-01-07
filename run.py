@@ -50,6 +50,18 @@ def save_pdf(pdf_form):
     return pdf_path
 
 
+# def tittle_of_book(pdf_path):
+#     parts = []
+#     path = pdf_path
+#     cut = path.split("\\")
+#     parts.append(cut)
+#     tittle = parts[0][-1]
+#     ready_tittle = tittle[:-4]
+#     ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
+#     pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
+#     return pretty_tittle
+
+
 def tittle_of_book(pdf_path):
     parts = []
     path = pdf_path
@@ -59,7 +71,7 @@ def tittle_of_book(pdf_path):
     ready_tittle = tittle[:-4]
     ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
     pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
-    return pretty_tittle
+    return path
 
 
 def convert_pdf_to_txt(path):
