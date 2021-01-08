@@ -52,7 +52,7 @@ def save_pdf(pdf_form):
     pdf_form.save(pdf_path)
     # driver.execute_script("window.localStorage.setItem('pdf','pdf_path');")
 
-    # return pdf_path
+    return pdf_path
 
 
 # def tittle_of_book(pdf_path):
