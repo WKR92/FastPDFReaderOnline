@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, flash, session, jsonify, current_app, Response
+from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, flash, session, jsonify, current_app
 from forms import UploadPDFForm
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -7,8 +7,6 @@ import re
 from pdfminer.high_level import extract_text
 import json
 import time
-from selenium import webdriver
-import threading
 
 
 
@@ -48,29 +46,18 @@ def save_pdf(pdf_form):
     # random_hex = secrets.token_hex(8)
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
-    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    pdf_path = os.path.join(app.root_path, 'tmp')
+    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    # pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
     # driver.execute_script("window.localStorage.setItem('pdf','pdf_path');")
 
     return pdf_path
 
 
-# def tittle_of_book(pdf_path):
-#     parts = []
-#     path = pdf_path
-#     cut = path.split("\\")
-#     parts.append(cut)
-#     tittle = parts[0][-1]
-#     ready_tittle = tittle[:-4]
-#     ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
-#     pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
-#     return pretty_tittle
-
-
 def tittle_of_book(pdf_path):
     parts = []
     path = pdf_path
+    cut = path.split("\\")
     cut = path.split("/")
     parts.append(cut)
     tittle = parts[0][-1]
@@ -137,7 +124,6 @@ def clearLists():
     data = []
 
 
-
 @app.route('/', methods=['GET', 'POST', 'PUT'])
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
@@ -152,7 +138,6 @@ def home():
 
             # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
             clearLists()
-            
         
         return redirect(url_for('reader'))
             
@@ -175,28 +160,9 @@ def loadReader():
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
-    print(request.path)
     my_var = session.get('my_var', None)
     bookTittle = tittle_of_book(my_var)
     target=convert_pdf_to_txt(my_var)
-
-    # def x():
-    #     z = threading.Thread(target=convert_pdf_to_txt(my_var))
-    #     time.sleep(0.1)
-    #     z.start()
-    # x()
-
-    # def generate():
-    #     Response()
-
-    # def y():
-    #     z = threading.Thread(target=generate)
-    #     time.sleep(0.1)
-    #     z.start()
-
-    # while split_text == []:
-    #     y()
-
     split(raw_text)
     first_text_clean(split_text)
     second_text_clean(firstCut)
