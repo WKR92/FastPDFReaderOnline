@@ -48,7 +48,7 @@ def save_pdf(pdf_form):
     f_namee, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_namee + f_ext
     # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    pdf_path = os.path.join('./tmp', pdf_fn)
+    pdf_path = os.path.join('app/tmp', pdf_fn)
     pdf_form.save(pdf_path)
     # driver.execute_script("window.localStorage.setItem('pdf','pdf_path');")
 
