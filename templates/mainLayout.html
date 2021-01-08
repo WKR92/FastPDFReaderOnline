@@ -114,6 +114,7 @@
 <script>
   var refresh_id;
   $(document).ready(function() {
+    if(document.getElementById("icon")){
     $.get(
           "{{ url_for('thread_status') }}",
           function(data) {
@@ -128,7 +129,7 @@
                 }
               )}
       , 1000);
-    }})
+    }})}
   });
 
   
@@ -137,8 +138,9 @@
 
 <script>
       $(document).ready(function(){
-        if(document.getElementById("icon"))
+        if(document.getElementById("icon")){
           $.getScript("{{url_for('static', filename='loadIcon.js')}}")
+        }
       });
 </script>
   
