@@ -27,8 +27,6 @@ def create_app():
 
 app = create_app()
 
-browser = webdriver.Chrome()
-
 
 global raw_text
 raw_text = []
@@ -43,15 +41,16 @@ thirdCutList = []
 global data
 data = []
 
-
+# driver = webdriver.Chrome()
 def save_pdf(pdf_form):
     # /app/static/user_pdf/
     # random_hex = secrets.token_hex(8)
     f_namee, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_namee + f_ext
-    pdf_path = os.path.join(app.root_path, 'app/static/user_pdf', pdf_fn)
-    # pdf_form.save(pdf_path)
-    browser.execute_script("window.localStorage.setItem('pdf','pdf_form.save(pdf_path)');")
+    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    pdf_path = os.path.join('./tmp', pdf_fn)
+    pdf_form.save(pdf_path)
+    # driver.execute_script("window.localStorage.setItem('pdf','pdf_path');")
 
     # return pdf_path
 
@@ -145,7 +144,8 @@ def home():
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
-            pdf_file = browser.execute_script("window.localStorage.getItem('pdf');")
+            pdf_file = save_pdf(form.pdfFile.data)
+            # pdf_file = driver.execute_script("window.localStorage.getItem('pdf');")
             print(pdf_file)
             session['my_var'] = pdf_file
 
