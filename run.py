@@ -8,6 +8,7 @@ from pdfminer.high_level import extract_text
 import json
 import time
 from selenium import webdriver
+import threading
 
 
 
@@ -45,8 +46,8 @@ data = []
 def save_pdf(pdf_form):
     # /app/static/user_pdf/
     # random_hex = secrets.token_hex(8)
-    f_namee, f_ext = os.path.splitext(pdf_form.filename)
-    pdf_fn = f_namee + f_ext
+    f_name, f_ext = os.path.splitext(pdf_form.filename)
+    pdf_fn = f_name + f_ext
     # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
     pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
@@ -171,14 +172,32 @@ def loadReader():
     data = []
     return render_template('loadReader.html', title='Web_Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
+def new_def():
+    print("1")
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
     print(request.path)
     my_var = session.get('my_var', None)
     bookTittle = tittle_of_book(my_var)
-    convert_pdf_to_txt(my_var)
+
+    def x():
+        z = threading.Thread(target=convert_pdf_to_txt(my_var))
+        time.sleep(0.2)
+        z.start()
+    x()
+
+    def y():
+        z = threading.Thread(target=new_def)
+        time.sleep(0.2)
+        z.start()
+
+    while split_text == []:
+        y()
+
     split(raw_text)
+
+
     first_text_clean(split_text)
     second_text_clean(firstCut)
     third_text_clean(secondCut)
