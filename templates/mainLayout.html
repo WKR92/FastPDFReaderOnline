@@ -122,7 +122,7 @@
                   $.get(
                     "{{ url_for('thread_status') }}",
                     function(data) {
-                      if (data.status == 'finished' && window.location.href === "http://127.0.0.1:5000/loadingPage") {
+                      if (data.status == 'finished') {
                         window.location.replace("{{ url_for('reader') }}");
                   }
                 }
