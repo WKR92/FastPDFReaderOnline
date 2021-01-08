@@ -7,6 +7,9 @@ import re
 from pdfminer.high_level import extract_text
 import json
 import time
+import threading
+import concurrent.futures
+import queue
 
 
 
@@ -19,6 +22,7 @@ def create_app():
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # app.config['SERVER_NAME'] = 'localhost:5000'
     # db = SQLAlchemy(app)
     db.init_app(app)
     return app
@@ -39,6 +43,9 @@ global thirdCutList
 thirdCutList = []
 global data
 data = []
+global finished
+finished = False
+
 
 # driver = webdriver.Chrome()
 def save_pdf(pdf_form):
@@ -46,8 +53,8 @@ def save_pdf(pdf_form):
     # random_hex = secrets.token_hex(8)
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
-    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    # pdf_path = os.path.join(app.root_path, 'tmp')
+    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
     # driver.execute_script("window.localStorage.setItem('pdf','pdf_path');")
 
@@ -122,24 +129,24 @@ def clearLists():
     thirdCutList = []
     global data
     data = []
+    global finished
+    finished = False
 
 
 @app.route('/', methods=['GET', 'POST', 'PUT'])
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
-    print(request.path)
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
             pdf_file = save_pdf(form.pdfFile.data)
             # pdf_file = driver.execute_script("window.localStorage.getItem('pdf');")
-            print(pdf_file)
             session['my_var'] = pdf_file
 
             # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
             clearLists()
         
-        return redirect(url_for('reader'))
+        return redirect(url_for('loadingPage'))
             
 
     return render_template('home.html', title='Upload page', form=form)
@@ -158,17 +165,59 @@ def loadReader():
     return render_template('loadReader.html', title='Web_Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
 
+@app.route('/status')
+def thread_status():
+    """ Return the status of the worker thread """
+    return jsonify(dict(status=('finished' if finished else 'running')))
+
+
+global dataSession
+dataSession = ""
+
+@app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
+def loadingPage():
+    my_var = session.get('my_var', None)
+    def fillLists():
+        with app.test_request_context():
+            convert_pdf_to_txt(my_var)
+            split(raw_text)
+            first_text_clean(split_text)
+            second_text_clean(firstCut)
+            third_text_clean(secondCut)
+            global dataSession
+            dataSession = thirdCutList
+            global finished
+            finished = True
+            
+
+    backgroundRun = threading.Thread(target=fillLists)
+    backgroundRun.start()
+
+
+    return render_template('loadingPage.html', title='Loading')
+
+
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
     my_var = session.get('my_var', None)
+    data = dataSession
     bookTittle = tittle_of_book(my_var)
-    target=convert_pdf_to_txt(my_var)
-    split(raw_text)
-    first_text_clean(split_text)
-    second_text_clean(firstCut)
-    third_text_clean(secondCut)
-    data = thirdCutList
-    flash('Your file is uploaded. Have a nice read.', "success")
+
+    # def x():
+        
+    #     convert_pdf_to_txt(my_var)
+    #     split(raw_text)
+    #     first_text_clean(split_text)
+    #     second_text_clean(firstCut)
+    #     third_text_clean(secondCut)
+    #     data = thirdCutList
+    #     time.sleep(1)
+
+    # z = threading.Thread(target=x)
+    # z.start()
+
+    
+    # flash('Your file is uploaded. Have a nice read.', "success")
 
     return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
