@@ -8,8 +8,6 @@ from pdfminer.high_level import extract_text
 import json
 import time
 import threading
-import concurrent.futures
-import queue
 
 
 
@@ -22,7 +20,6 @@ def create_app():
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # app.config['SERVER_NAME'] = 'localhost:5000'
     # db = SQLAlchemy(app)
     db.init_app(app)
     return app
@@ -56,7 +53,6 @@ def save_pdf(pdf_form):
     # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
     pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
-    # driver.execute_script("window.localStorage.setItem('pdf','pdf_path');")
 
     return pdf_path
 
@@ -140,7 +136,6 @@ def home():
     if form.validate_on_submit():
         if form.pdfFile.data:
             pdf_file = save_pdf(form.pdfFile.data)
-            # pdf_file = driver.execute_script("window.localStorage.getItem('pdf');")
             session['my_var'] = pdf_file
 
             # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
@@ -202,22 +197,8 @@ def reader():
     my_var = session.get('my_var', None)
     data = dataSession
     bookTittle = tittle_of_book(my_var)
-
-    # def x():
-        
-    #     convert_pdf_to_txt(my_var)
-    #     split(raw_text)
-    #     first_text_clean(split_text)
-    #     second_text_clean(firstCut)
-    #     third_text_clean(secondCut)
-    #     data = thirdCutList
-    #     time.sleep(1)
-
-    # z = threading.Thread(target=x)
-    # z.start()
-
     
-    # flash('Your file is uploaded. Have a nice read.', "success")
+    flash('Your file is uploaded. Have a nice read.', "success")
 
     return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 

@@ -90,18 +90,18 @@
 
   </script>
 
-  <script>
-      // $(document).ready(function(){
-      //   $("#ChoosePDFbtn").click(function(){
-      //     // $("#IDtoChange").attr("id", "loadReact");
-      //       $("#loadReact").on("click", function(){
-      //         if($("#ChoosePDFbtn").val() !== ""){
-      //           $.getScript("{{url_for('static', filename='loadIcon.js')}}");
-      //         }
-      //     });
-      //   });
-      // });
-  </script>
+  <!-- <script>
+      $(document).ready(function(){
+        $("#ChoosePDFbtn").click(function(){
+          // $("#IDtoChange").attr("id", "loadReact");
+            $("#loadReact").on("click", function(){
+              if($("#ChoosePDFbtn").val() !== ""){
+                $.getScript("{{url_for('static', filename='loadIcon.js')}}");
+              }
+          });
+        });
+      });
+ </script> -->
 
   <script>
     $(document).ready(function(){
@@ -112,31 +112,34 @@
   </script>
 
 <script>
+  var refresh_id;
   $(document).ready(function() {
     $.get(
           "{{ url_for('thread_status') }}",
           function(data) {
             if (data.status !== 'finished') {
-    var refresh_id = setInterval(function() {
-        $.get(
-          "{{ url_for('thread_status') }}",
-          function(data) {
-            // console.log(data);
-            if (data.status == 'finished') {
-              window.location.replace("{{ url_for('reader') }}");
-            }
-          }
-        )}
+                refresh_id = setInterval(function() {
+                  $.get(
+                    "{{ url_for('thread_status') }}",
+                    function(data) {
+                      if (data.status == 'finished' && window.location.href === "http://127.0.0.1:5000/loadingPage") {
+                        window.location.replace("{{ url_for('reader') }}");
+                  }
+                }
+              )}
       , 1000);
     }})
   });
+
+  
+  
 </script>
 
 <script>
-      if(window.location.href === "http://127.0.0.1:5000/reader"){
-        console.log("no ta");
-        // $.getScript("{{url_for('static', filename='loadIcon.js')}}");
-    }
+      $(document).ready(function(){
+        if(document.getElementById("icon"))
+          $.getScript("{{url_for('static', filename='loadIcon.js')}}")
+      });
 </script>
   
   </body>
