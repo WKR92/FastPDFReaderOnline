@@ -178,27 +178,26 @@ def reader():
     print(request.path)
     my_var = session.get('my_var', None)
     bookTittle = tittle_of_book(my_var)
+    target=convert_pdf_to_txt(my_var)
 
-    def x():
-        z = threading.Thread(target=convert_pdf_to_txt(my_var))
-        time.sleep(0.1)
-        z.start()
-    x()
+    # def x():
+    #     z = threading.Thread(target=convert_pdf_to_txt(my_var))
+    #     time.sleep(0.1)
+    #     z.start()
+    # x()
 
-    def generate():
-        Response()
+    # def generate():
+    #     Response()
 
-    def y():
-        z = threading.Thread(target=generate)
-        time.sleep(0.1)
-        z.start()
+    # def y():
+    #     z = threading.Thread(target=generate)
+    #     time.sleep(0.1)
+    #     z.start()
 
-    while split_text == []:
-        y()
+    # while split_text == []:
+    #     y()
 
     split(raw_text)
-
-
     first_text_clean(split_text)
     second_text_clean(firstCut)
     third_text_clean(secondCut)
