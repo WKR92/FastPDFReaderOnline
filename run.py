@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, flash, session, jsonify, current_app
+from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, flash, session, jsonify, current_app, Response
 from forms import UploadPDFForm
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -172,8 +172,6 @@ def loadReader():
     data = []
     return render_template('loadReader.html', title='Web_Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
-def new_def():
-    print("1")
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
@@ -183,13 +181,16 @@ def reader():
 
     def x():
         z = threading.Thread(target=convert_pdf_to_txt(my_var))
-        time.sleep(0.2)
+        time.sleep(0.1)
         z.start()
     x()
 
+    def generate():
+        Response()
+
     def y():
-        z = threading.Thread(target=new_def)
-        time.sleep(0.2)
+        z = threading.Thread(target=generate)
+        time.sleep(0.1)
         z.start()
 
     while split_text == []:
