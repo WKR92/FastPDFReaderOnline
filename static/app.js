@@ -278,6 +278,7 @@ if(data.length === 0){
   var starting_text = "Click 'Load' button to load your save file."
   if(localStorage.getItem('name') === null){
     window.location.replace("/");
+    window.location.reload();
     alert("You have no save file. Please, go back and submit your pdf to start reading.");
   } 
 } else {
@@ -433,6 +434,7 @@ const mainInt = class MainInterval extends React.Component {
    }
    goBack(){
     window.location.replace("/");
+    window.location.reload();
    }
   render() {  
        return(
