@@ -53,6 +53,7 @@ def save_pdf(pdf_form):
     # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
     pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
+    print(pdf_path)
 
     return pdf_path
 
@@ -195,8 +196,10 @@ def loadingPage():
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
     my_var = session.get('my_var', None)
+    print(my_var)
     data = dataSession
     bookTittle = tittle_of_book(my_var)
+    os.remove(my_var)
     
     flash('Your file is uploaded. Have a nice read.', "success")
 
