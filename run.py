@@ -78,16 +78,10 @@ def tittle_of_book(pdf_form):
     parts = []
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
-    print("pdf_fn = " + pdf_fn)
-    # cut = path.split("\\")
-    # cut = path.split("/")
-    # parts.append(cut)
-    # tittle = parts[0][-1]
-    # ready_tittle = tittle[:-4]
-    # ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
-    # pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
-    # return pretty_tittle
-    return pdf_fn
+    ready_tittle = pdf_fn[:-4]
+    ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
+    pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
+    return pretty_tittle
 
 
 def convert_pdf_to_txt(path):
