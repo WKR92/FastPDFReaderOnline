@@ -1,5 +1,4 @@
 // React without JSX
-console.log(my_var);
 
 // 1st working try
 // var result = data.splice(0, 1);
