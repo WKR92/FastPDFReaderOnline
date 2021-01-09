@@ -118,13 +118,13 @@
     if(document.getElementById("icon")){
     $.get(
           "{{ url_for('thread_status') }}",
-          function(data) {
-            if (data.status !== 'finished') {
+          function(run) {
+            if (run.status !== 'finished') {
                 refresh_id = setInterval(function() {
                   $.get(
                     "{{ url_for('thread_status') }}",
-                    function(data) {
-                      if (data.status == 'finished') {
+                    function(run) {
+                      if (run.status == 'finished') {
                         window.location.replace("{{ url_for('reader') }}");
                   }
                 }
@@ -132,9 +132,6 @@
       , 1000);
     }})}
   });
-
-  
-  
 </script>
 
 <script>

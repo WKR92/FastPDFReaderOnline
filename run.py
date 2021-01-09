@@ -52,8 +52,8 @@ def save_pdf(pdf_form):
     # random_hex = secrets.token_hex(8)
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
-    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    pdf_path = os.path.join(app.root_path, 'tmp')
+    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    # pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
     print(pdf_path)
 
@@ -180,7 +180,8 @@ def loadReader():
 @app.route('/status')
 def thread_status():
     """ Return the status of the worker thread """
-    return jsonify(dict(status=('finished' if finished else 'running')))
+    data = dataSession
+    return jsonify(dict(status=('finished' if data != '' else 'running')))
 
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
