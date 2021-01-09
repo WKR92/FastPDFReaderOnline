@@ -42,6 +42,8 @@ global data
 data = []
 global finished
 finished = False
+global dataSession
+dataSession = ""
 
 
 # driver = webdriver.Chrome()
@@ -128,6 +130,8 @@ def clearLists():
     data = []
     global finished
     finished = False
+    global dataSession
+    dataSession = ""    
 
 
 @app.route('/', methods=['GET', 'POST', 'PUT'])
@@ -166,9 +170,6 @@ def thread_status():
     """ Return the status of the worker thread """
     return jsonify(dict(status=('finished' if finished else 'running')))
 
-
-global dataSession
-dataSession = ""
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
