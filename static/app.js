@@ -275,7 +275,8 @@ class LoadArea extends React.Component {
 
 // setting starting_text
 if(data.length === 0){
-  if(window.location.href === "reader"){
+  if(window.location.href === "https://fastpdfreader.herokuapp.com/reader"){
+    console.log("no reader no")
     window.location.reload();
   } else {
     var starting_text = "Click 'Load' button to load your save file."
