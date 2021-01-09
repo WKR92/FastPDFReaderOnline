@@ -57,32 +57,8 @@ background-color: #5f788a;
   }
 }
 
-@media (min-width: 858px) {
-  #homeTittle {
-      font-size: 12px;
-  }
-}
-
-@media (min-width: 780px) {
-  h1 {
-      font-size: 11px;
-  }
-}
-
-@media (min-width: 702px) {
-  h1 {
-      font-size: 10px;
-  }
-}
-
-@media (min-width: 724px) {
-  h1 {
-      font-size: 9px;
-  }
-}
-
-@media (max-width: 623px) {
-  #homeTittle {
-      font-size: 8px;
+@media screen and (max-width: 768px) {
+  h1{
+      font-size:14px;
   }
 }
