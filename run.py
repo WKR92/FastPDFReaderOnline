@@ -51,7 +51,7 @@ def save_pdf(pdf_form):
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
     # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    pdf_path = os.path.join(app.root_path, 'tmp', pdf_fn)
+    pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
     print(pdf_path)
 
@@ -184,6 +184,7 @@ def loadingPage():
             dataSession = thirdCutList
             global finished
             finished = True
+            os.remove(my_var)
             
 
     backgroundRun = threading.Thread(target=fillLists)
@@ -199,7 +200,6 @@ def reader():
     print(my_var)
     data = dataSession
     bookTittle = tittle_of_book(my_var)
-    # os.remove(my_var)
     
     flash('Your file is uploaded. Have a nice read.', "success")
 
