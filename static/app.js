@@ -276,7 +276,7 @@ class LoadArea extends React.Component {
 // setting starting_text
 if(data.length === 0){
   if(window.location.href === "reader"){
-    window.location.reload;
+    window.location.reload();
   } else {
     var starting_text = "Click 'Load' button to load your save file."
     if(localStorage.getItem('name') === null){
