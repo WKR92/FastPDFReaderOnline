@@ -200,7 +200,7 @@ def reader():
     
     flash('Your file is uploaded. Have a nice read.', "success")
 
-    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
+    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle), my_var=my_var)
 
 
 # if __name__ == "__main__":

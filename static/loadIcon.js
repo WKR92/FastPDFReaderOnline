@@ -1,10 +1,10 @@
 var e = React.createElement;
 
 
-window.addEventListener('beforeunload', function (e) {
-  e.preventDefault();
-  e.returnValue = '';
-});
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   e.returnValue = '';
+// });
 
 
 var child = class Child extends React.Component {
