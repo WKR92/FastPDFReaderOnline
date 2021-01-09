@@ -186,6 +186,9 @@ def loadingPage():
             global finished
             finished = True
             os.remove(my_var)
+            if(request.url != "loadReader"):
+                backgroundRun.raise_exception() 
+                backgroundRun.join() 
             
 
     backgroundRun = threading.Thread(target=fillLists)
@@ -204,7 +207,7 @@ def reader():
     
     flash('Your file is uploaded. Have a nice read.', "success")
 
-    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle), my_var=my_var)
+    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
 
 # if __name__ == "__main__":
