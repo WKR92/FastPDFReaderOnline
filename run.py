@@ -11,7 +11,6 @@ import threading
 import sys
 
 
-
 db = SQLAlchemy()
 
 
