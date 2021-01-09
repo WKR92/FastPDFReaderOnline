@@ -61,17 +61,33 @@ def save_pdf(pdf_form):
     return pdf_path
 
 
-def tittle_of_book(pdf_path):
+# def tittle_of_book(pdf_path):
+#     parts = []
+#     path = pdf_path
+#     cut = path.split("\\")
+#     cut = path.split("/")
+#     parts.append(cut)
+#     tittle = parts[0][-1]
+#     ready_tittle = tittle[:-4]
+#     ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
+#     pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
+#     return pretty_tittle
+
+
+def tittle_of_book(pdf_form):
     parts = []
-    path = pdf_path
-    cut = path.split("\\")
-    cut = path.split("/")
-    parts.append(cut)
-    tittle = parts[0][-1]
-    ready_tittle = tittle[:-4]
-    ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
-    pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
-    return pretty_tittle
+    f_name, f_ext = os.path.splitext(pdf_form.filename)
+    pdf_fn = f_name + f_ext
+    print("pdf_fn = " + pdf_fn)
+    # cut = path.split("\\")
+    # cut = path.split("/")
+    # parts.append(cut)
+    # tittle = parts[0][-1]
+    # ready_tittle = tittle[:-4]
+    # ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
+    # pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
+    # return pretty_tittle
+    return pdf_fn
 
 
 def convert_pdf_to_txt(path):
@@ -142,7 +158,9 @@ def home():
     if form.validate_on_submit():
         if form.pdfFile.data:
             pdf_file = save_pdf(form.pdfFile.data)
+            bookTittle = tittle_of_book(form.pdfFile.data)
             session['my_var'] = pdf_file
+            session['bookTittle'] = bookTittle
 
             # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
             clearLists()
@@ -205,7 +223,8 @@ def reader():
     my_var = session.get('my_var', None)
     print(my_var)
     data = dataSession
-    bookTittle = tittle_of_book(my_var)
+    # bookTittle = tittle_of_book(my_var)
+    bookTittle = session.get('bookTittle', None)
     
     flash('Your file is uploaded. Have a nice read.', "success")
 

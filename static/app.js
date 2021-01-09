@@ -275,7 +275,7 @@ class LoadArea extends React.Component {
 
 // setting starting_text
 if(data.length === 0){
-  var starting_text = "Click 'Load' button to load your save file"
+  var starting_text = "Click 'Load' button to load your save file."
   if(localStorage.getItem('name') === null){
     window.location.replace("/");
     alert("You have no save file. Please, go back and submit your pdf to start reading.");
