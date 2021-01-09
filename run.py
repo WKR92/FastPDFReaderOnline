@@ -186,9 +186,9 @@ def loadingPage():
             global finished
             finished = True
             os.remove(my_var)
-            if(request.url != "loadReader"):
-                backgroundRun.raise_exception() 
-                backgroundRun.join() 
+            if(request.url != "https://fastpdfreader.herokuapp.com/loadingPage"):
+                backgroundRun.join()
+                print("run end")
             
 
     backgroundRun = threading.Thread(target=fillLists)
