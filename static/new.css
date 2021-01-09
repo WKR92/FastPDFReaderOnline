@@ -58,7 +58,7 @@ background-color: #5f788a;
 }
 
 @media (min-width: 858px) {
-  h1 {
+  #homeTittle {
       font-size: 12px;
   }
 }
@@ -82,7 +82,7 @@ background-color: #5f788a;
 }
 
 @media (max-width: 623px) {
-  h1 {
+  #homeTittle {
       font-size: 8px;
   }
 }

@@ -8,6 +8,7 @@ from pdfminer.high_level import extract_text
 import json
 import time
 import threading
+import sys
 
 
 
@@ -186,12 +187,13 @@ def loadingPage():
             global finished
             finished = True
             os.remove(my_var)
-            if(request.url != "https://fastpdfreader.herokuapp.com/loadingPage"):
-                backgroundRun.join()
-                print("run end")
+            print("run at finish line")
+            # if(request.url != "https://fastpdfreader.herokuapp.com/loadingPage"):
+            #     backgroundRun.join()
+            #     print("run end")
             
 
-    backgroundRun = threading.Thread(target=fillLists)
+    backgroundRun = threading.Thread(target=fillLists, daemon=True)
     backgroundRun.start()
 
 
