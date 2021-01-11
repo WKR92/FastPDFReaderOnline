@@ -180,7 +180,7 @@ def thread_status():
     data = dataSession
     return jsonify(dict(status=('finished' if data != '' else 'running')))
 
-
+global q
 q = queue.Queue()
 global threadsList
 threadsList = []
@@ -190,9 +190,9 @@ def loadingPage():
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
-    # global threadsList
-    # threadsList = []
-    # def fillLists():
+    global q
+    global threadsList
+    threadsList = []
 
     def fillLists():
         with app.test_request_context():
@@ -207,6 +207,9 @@ def loadingPage():
             print(threading.currentThread())
             print(threading.enumerate()[-1])
             print(threading.enumerate())
+            print(threadsList[-1])
+            print(threadsList)
+            print(q.qsize())
             convert_pdf_to_txt(my_var)
             print(threading.currentThread().getName() + " converting pdf done")
             if threading.currentThread() != threading.enumerate()[-1]:
