@@ -47,10 +47,9 @@ dataSession = ""
 
 
 def save_pdf(pdf_form):
-    # /app/static/user_pdf/
-    # random_hex = secrets.token_hex(8)
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
+    # underneath line is for local version
     # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
     pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
@@ -186,7 +185,7 @@ def thread_status():
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage(): 
     my_var = session.get('my_var', None)
-    def fillLists(stop_event, arg):
+    def fillLists():
         with app.test_request_context():
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
