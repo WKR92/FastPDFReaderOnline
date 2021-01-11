@@ -276,7 +276,7 @@ class LoadArea extends React.Component {
 // setting starting_text
 if(data.length === 0){
   if(window.location.href === "https://fastpdfreader.herokuapp.com/reader"){
-    var starting_text = "There was en error. Plz go back and try again."
+    var starting_text = "There was en error. Try to reload page few times to get your text. If whis wont work, go back and upload again."
   } else {
     var starting_text = "Click 'Load' button to load your save file."
     if(localStorage.getItem('name') === null){
