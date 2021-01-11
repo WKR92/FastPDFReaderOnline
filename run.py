@@ -8,7 +8,7 @@ from pdfminer.high_level import extract_text
 import json
 import time
 import threading
-import sys
+import multiprocessing
 
 
 db = SQLAlchemy()
@@ -40,13 +40,12 @@ global thirdCutList
 thirdCutList = []
 global data
 data = []
-global finished
-finished = False
+# global finished
+# finished = False
 global dataSession
 dataSession = ""
 
 
-# driver = webdriver.Chrome()
 def save_pdf(pdf_form):
     # /app/static/user_pdf/
     # random_hex = secrets.token_hex(8)
@@ -55,11 +54,11 @@ def save_pdf(pdf_form):
     # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
     pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
-    print(pdf_path)
 
     return pdf_path
 
 
+# local version of tittle_of_book def
 # def tittle_of_book(pdf_path):
 #     parts = []
 #     path = pdf_path
@@ -138,8 +137,8 @@ def clearLists():
     thirdCutList = []
     global data
     data = []
-    global finished
-    finished = False
+    # global finished
+    # finished = False
     global dataSession
     dataSession = ""    
 
@@ -185,26 +184,27 @@ def thread_status():
 
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
-def loadingPage():
+def loadingPage(): 
     my_var = session.get('my_var', None)
-    def fillLists():
+    def fillLists(stop_event, arg):
         with app.test_request_context():
+            print("backgroundRun started")
+            print("Ilość działających threadów to: " + str(threading.active_count()))
             convert_pdf_to_txt(my_var)
-            split(raw_text)
-            first_text_clean(split_text)
-            second_text_clean(firstCut)
-            third_text_clean(secondCut)
-            global dataSession
-            dataSession = thirdCutList
-            global finished
-            finished = True
-            os.remove(my_var)
-            print("run at finish line")
-            # if(request.url != "https://fastpdfreader.herokuapp.com/loadingPage"):
-            #     backgroundRun.join()
-            #     print("run end")
-            
+            if threading.current_thread():
+                split(raw_text)
+                first_text_clean(split_text)
+                second_text_clean(firstCut)
+                third_text_clean(secondCut)
+                global dataSession
+                dataSession = thirdCutList
+                # global finished
+                # finished = True
+                os.remove(my_var)
+                print("run at finish line")
 
+            
+    pill2kill = threading.Event()
     backgroundRun = threading.Thread(target=fillLists, daemon=True)
     backgroundRun.start()
 
@@ -215,7 +215,6 @@ def loadingPage():
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
     my_var = session.get('my_var', None)
-    print(my_var)
     data = dataSession
     # bookTittle = tittle_of_book(my_var)
     bookTittle = session.get('bookTittle', None)

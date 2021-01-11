@@ -78,11 +78,17 @@
     var data = {{ data|safe }}
     var bookTitle = {{ bookTitle|safe }}
     
+    // previuos version for loading app.js
+    // $(document).ready(function(){
+    //   $("#start_btn").one("noJSX", function(){
+    //     $.getScript("{{url_for('static', filename='app.js')}}")
+    //   });
+    // });
 
     $(document).ready(function(){
-      $("#start_btn").one("click", function(){
+      if(document.getElementById("NoJsx")){
         $.getScript("{{url_for('static', filename='app.js')}}")
-      });
+      }
     });
 
     $(document).ready(function(){
@@ -106,7 +112,7 @@
 
   <script>
     $(document).ready(function(){
-      if(window.location.href === "loadReader"){
+      if(window.location.href === "loadReader" && document.getElementById("NoJsx")){
         $.getScript("{{url_for('static', filename='loadIcon.js')}}");
       }
     });
@@ -121,6 +127,7 @@
           function(run) {
             if (run.status !== 'finished') {
                 refresh_id = setInterval(function() {
+                  console.log(run);
                   $.get(
                     "{{ url_for('thread_status') }}",
                     function(run) {

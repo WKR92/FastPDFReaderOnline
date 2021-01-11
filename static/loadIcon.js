@@ -23,9 +23,9 @@ var child = class Child extends React.Component {
         e('div', {className:"d-inline-block w-100 m-auto"},
         e('p', {className:"text-center d-block m-auto w-25 font-weight-bold"}, "Time of loading: " + this.props.Sec + " sec"),
         e('button', {id:"cancelBtn", className:"btn btn-primary ml-auto mr-auto mb-auto mt-4 d-block", onClick: () => `${this.dismiss()}`}, 'Cancel loading')),
-        e('p', {className:"text-center mt-4"}, "Note: This reader can not be able to efficiently process every PDF file. If something's wrong with one, please try another."),
-        e('p', {className:"text-center"}, "Note: If you stopped page loading from here with browser 'Stop' button, the loading circle will spin forever. In that case, you have to go back."),
-        e('p', {className:"text-center"}, "If you click to go to other subpage from here, you will cancel loading imidiatelly."))
+        e('p', {className:"text-center mt-4"}, "Note-1: This reader can not be able to efficiently process every PDF file. If something's wrong with one, please try another."),
+        e('p', {className:"text-center"}, "Note-2: If you stopped page loading from here with browser 'Stop' button, the loading circle will spin forever. In that case, you have to go back."),
+        e('p', {className:"text-center"}, "Note-3: If you click to go to other subpage from here, you will cancel loading imidiatelly."))
       );
     }
   }

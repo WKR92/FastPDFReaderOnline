@@ -62,9 +62,3 @@ background-color: #5f788a;
       font-size:34px;
   }
 }
-
-@media screen and (max-width: 768px) {
-  #goToLoadScreenBtn{
-    text-align: center;
-  }
-}
