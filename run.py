@@ -219,7 +219,7 @@ def loadingPage():
                 dataSession = thirdCutList
                 # global finished
                 # finished = True
-                # os.remove(my_var)
+                os.remove(my_var)
                 print(threading.currentThread())
                 print(threading.enumerate()[-1])
                 print("run at finish line")
