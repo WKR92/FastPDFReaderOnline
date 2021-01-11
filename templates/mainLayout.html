@@ -120,16 +120,32 @@
 
 <script>
   var refresh_id;
+  // $(document).ready(function() {
+  //   if(document.getElementById("icon")){
+  //   $.get(
+  //         "{{ url_for('thread_status') }}",
+  //         function(run) {
+  //           if (run.status !== 'finished') {
+  //               refresh_id = setInterval(function() {
+  //                 console.log(run);
+  //                 $.get(
+  //                   "{{ url_for('thread_status') }}",
+  //                   function(run) {
+  //                     if (run.status == 'finished') {
+  //                       window.location.replace("{{ url_for('reader') }}");
+  //                 }
+  //               }
+  //             )}
+  //     , 1000);
+  //   }})}
+  // });
+
   $(document).ready(function() {
-    if(document.getElementById("icon")){
-    $.get(
-          "{{ url_for('thread_status') }}",
-          function(run) {
-            if (run.status !== 'finished') {
+
                 refresh_id = setInterval(function() {
-                  console.log(run);
                   $.get(
                     "{{ url_for('thread_status') }}",
+                    console.log(run),
                     function(run) {
                       if (run.status == 'finished') {
                         window.location.replace("{{ url_for('reader') }}");
@@ -137,7 +153,6 @@
                 }
               )}
       , 1000);
-    }})}
   });
 </script>
 
