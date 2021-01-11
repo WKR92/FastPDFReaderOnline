@@ -190,6 +190,7 @@ def loadingPage():
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
+    # 1st try that does work localu but doesnt work on heroku
     # def fillLists():
     #     with app.test_request_context():
     #         threading.currentThread().setName(bookTittle)
@@ -229,40 +230,94 @@ def loadingPage():
     #             print("run at finish line")
     
 
+    # 2st try that does work localu but doesnt work on heroku
+    # global threadsList
+    # threadsList = []
+    # def fillLists():
+        
+    #     with app.test_request_context():
+    #         threading.currentThread().setName(bookTittle)
+    #         newThread = threading.currentThread().getName()
+    #         q.put(newThread)
+    #         threadsList.append(q.get())
+    #         print("backgroundRun started")
+    #         print("Ilość działających threadów to: " + str(threading.active_count()))
+   
+    #         print("")
+    #         print(threading.currentThread().getName())
+    #         print(threadsList[-1])
+    #         print(threadsList)
+    #         print(q.qsize())
+            
+    #         convert_pdf_to_txt(my_var)
+    #         print(threading.currentThread().getName() + " converting pdf done")
+    #         if threading.currentThread().getName() != threadsList[-1]:
+    #             global raw_text
+    #             raw_text = []
+    #             print("raw_text cleared")
+    #             print(threading.currentThread().getName())
+    #             print(threadsList[-1])
+    #             print(threadsList)
+    #         if threading.currentThread().getName() == threadsList[-1] and split_text != []:
+    #             print(threading.currentThread().getName() + " thread finished without action")
+    #             print(threading.currentThread().getName())
+    #             print(threadsList[-1])
+    #             print(threadsList)
+    #             return
+    #         if threading.currentThread().getName() == threadsList[-1]:
+    #             split(raw_text)
+    #             first_text_clean(split_text)
+    #             second_text_clean(firstCut)
+    #             third_text_clean(secondCut)
+    #             global dataSession
+    #             dataSession = thirdCutList
+    #             # global finished
+    #             # finished = True
+    #             os.remove(my_var)
+    #             print(threading.currentThread().getName())
+    #             print(threadsList[-1])
+    #             print(threadsList)
+    #             print("run at finish line")
+
+    global q
     global threadsList
     threadsList = []
     def fillLists():
         
+
         with app.test_request_context():
             threading.currentThread().setName(bookTittle)
             newThread = threading.currentThread().getName()
             q.put(newThread)
-            threadsList.append(q.get())
+            deque = q.queue
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
    
             print("")
             print(threading.currentThread().getName())
-            print(threadsList[-1])
-            print(threadsList)
+            # print(threadsList[-1])
+            # print(threadsList)
             print(q.qsize())
-            
+            print(deque[-1])
+            print(deque)
             convert_pdf_to_txt(my_var)
             print(threading.currentThread().getName() + " converting pdf done")
-            if threading.currentThread().getName() != threadsList[-1]:
+            if threading.currentThread().getName() != deque[-1]:
                 global raw_text
                 raw_text = []
                 print("raw_text cleared")
                 print(threading.currentThread().getName())
-                print(threadsList[-1])
-                print(threadsList)
-            if threading.currentThread().getName() == threadsList[-1] and split_text != []:
+                print(deque[-1])
+                print(deque)
+                # print(threadsList[-1])
+                # print(threadsList)
+            if threading.currentThread().getName() == deque[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
                 print(threading.currentThread().getName())
-                print(threadsList[-1])
-                print(threadsList)
+                # print(threadsList[-1])
+                # print(threadsList)
                 return
-            if threading.currentThread().getName() == threadsList[-1]:
+            if threading.currentThread().getName() == deque[-1]:
                 split(raw_text)
                 first_text_clean(split_text)
                 second_text_clean(firstCut)
@@ -273,8 +328,8 @@ def loadingPage():
                 # finished = True
                 os.remove(my_var)
                 print(threading.currentThread().getName())
-                print(threadsList[-1])
-                print(threadsList)
+                # print(threadsList[-1])
+                # print(threadsList)
                 print("run at finish line")
 
             
