@@ -180,54 +180,57 @@ def thread_status():
     data = dataSession
     return jsonify(dict(status=('finished' if data != '' else 'running')))
 
+global threadsList
+threadsList = []
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage(): 
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
-    # def fillLists():
-    #     with app.test_request_context():
-    #         threading.currentThread().setName(bookTittle)
-    #         print("backgroundRun started")
-    #         print("Ilość działających threadów to: " + str(threading.active_count()))
-   
-    #         print("")
-    #         print(threading.currentThread())
-    #         print(threading.enumerate()[-1])
-    #         print(threading.enumerate())
-    #         convert_pdf_to_txt(my_var)
-    #         print(threading.currentThread().getName() + " converting pdf done")
-    #         if threading.currentThread() != threading.enumerate()[-1]:
-    #             global raw_text
-    #             raw_text = []
-    #             print("raw_text cleared")
-    #             print(threading.currentThread())
-    #             print(threading.enumerate()[-1])
-    #             print(threading.enumerate())
-    #         print(threading.enumerate()[-1])
-    #         if threading.currentThread() == threading.enumerate()[-1] and split_text != []:
-    #             print(threading.currentThread().getName() + " thread finished without action")
-    #             print(threading.currentThread())
-    #             print(threading.enumerate()[-1])
-    #             print(threading.enumerate())
-    #             return
-    #         if threading.currentThread() == threading.enumerate()[-1]:
-    #             split(raw_text)
-    #             first_text_clean(split_text)
-    #             second_text_clean(firstCut)
-    #             third_text_clean(secondCut)
-    #             global dataSession
-    #             dataSession = thirdCutList
-    #             # global finished
-    #             # finished = True
-    #             os.remove(my_var)
-    #             print(threading.currentThread())
-    #             print(threading.enumerate()[-1])
-    #             print("run at finish line")
-    
-
     def fillLists():
-        threadsList = []
+        with app.test_request_context():
+            threading.currentThread().setName(bookTittle)
+            print("backgroundRun started")
+            print("Ilość działających threadów to: " + str(threading.active_count()))
+   
+            print("")
+            print(threading.currentThread())
+            print(threading.enumerate()[-1])
+            print(threading.enumerate())
+            convert_pdf_to_txt(my_var)
+            print(threading.currentThread().getName() + " converting pdf done")
+            if threading.currentThread() != threading.enumerate()[-1]:
+                global raw_text
+                raw_text = []
+                print("raw_text cleared")
+                print(threading.currentThread())
+                print(threading.enumerate()[-1])
+                print(threading.enumerate())
+            print(threading.enumerate()[-1])
+            if threading.currentThread() == threading.enumerate()[-1] and split_text != []:
+                print(threading.currentThread().getName() + " thread finished without action")
+                print(threading.currentThread())
+                print(threading.enumerate()[-1])
+                print(threading.enumerate())
+                return
+            if threading.currentThread() == threading.enumerate()[-1]:
+                split(raw_text)
+                first_text_clean(split_text)
+                second_text_clean(firstCut)
+                third_text_clean(secondCut)
+                global dataSession
+                dataSession = thirdCutList
+                # global finished
+                # finished = True
+                os.remove(my_var)
+                print(threading.currentThread())
+                print(threading.enumerate()[-1])
+                print("run at finish line")
+    
+    global threadsList
+    threadsList = []
+    def fillLists():
+        
         with app.test_request_context():
             threading.currentThread().setName(bookTittle)
             newThread = threading.currentThread().getName()
@@ -270,7 +273,6 @@ def loadingPage():
                 print("run at finish line")
 
             
-    pill2kill = threading.Event()
     backgroundRun = threading.Thread(target=fillLists, daemon=True)
     backgroundRun.start()
 
