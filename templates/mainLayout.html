@@ -146,7 +146,7 @@
           "{{ url_for('thread_status') }}",
           function(run) {
             console.log(run);
-            if (run.status == 'finished' && window.location.href == "loadingPage") {
+            if (run.status == 'finished' && document.getElementById("icon")) {
               window.location.replace("{{ url_for('reader') }}");
         }
       }
