@@ -190,13 +190,11 @@ def loadingPage():
             threading.currentThread().setName(bookTittle)
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
-            print(threading.currentThread().getName())
-            print(threading.currentThread())
-            print(threading.enumerate())
-            print(threading.enumerate()[-1])
+   
             print("")
             print(threading.currentThread())
             print(threading.enumerate()[-1])
+            print(threading.enumerate())
             convert_pdf_to_txt(my_var)
             print(threading.currentThread().getName() + " converting pdf done")
             if threading.currentThread() != threading.enumerate()[-1]:
@@ -204,11 +202,14 @@ def loadingPage():
                 raw_text = []
                 print("raw_text cleared")
                 print(threading.currentThread())
+                print(threading.enumerate()[-1])
+                print(threading.enumerate())
             print(threading.enumerate()[-1])
             if threading.currentThread() == threading.enumerate()[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
                 print(threading.currentThread())
                 print(threading.enumerate()[-1])
+                print(threading.enumerate())
                 return
             if threading.currentThread() == threading.enumerate()[-1]:
                 split(raw_text)
