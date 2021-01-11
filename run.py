@@ -227,50 +227,51 @@ def loadingPage():
                 print(threading.enumerate()[-1])
                 print("run at finish line")
     
-    global threadsList
-    threadsList = []
-    def fillLists():
+    
+    # global threadsList
+    # threadsList = []
+    # def fillLists():
         
-        with app.test_request_context():
-            threading.currentThread().setName(bookTittle)
-            newThread = threading.currentThread().getName()
-            threadsList.append(newThread)
-            print("backgroundRun started")
-            print("Ilość działających threadów to: " + str(threading.active_count()))
+    #     with app.test_request_context():
+    #         threading.currentThread().setName(bookTittle)
+    #         newThread = threading.currentThread().getName()
+    #         threadsList.append(newThread)
+    #         print("backgroundRun started")
+    #         print("Ilość działających threadów to: " + str(threading.active_count()))
    
-            print("")
-            print(threading.currentThread().getName())
-            print(threadsList[-1])
-            print(threadsList)
-            convert_pdf_to_txt(my_var)
-            print(threading.currentThread().getName() + " converting pdf done")
-            if threading.currentThread().getName() != threadsList[-1]:
-                global raw_text
-                raw_text = []
-                print("raw_text cleared")
-                print(threading.currentThread().getName())
-                print(threadsList[-1])
-                print(threadsList)
-            if threading.currentThread().getName() == threadsList[-1] and split_text != []:
-                print(threading.currentThread().getName() + " thread finished without action")
-                print(threading.currentThread().getName())
-                print(threadsList[-1])
-                print(threadsList)
-                return
-            if threading.currentThread().getName() == threadsList[-1]:
-                split(raw_text)
-                first_text_clean(split_text)
-                second_text_clean(firstCut)
-                third_text_clean(secondCut)
-                global dataSession
-                dataSession = thirdCutList
-                # global finished
-                # finished = True
-                os.remove(my_var)
-                print(threading.currentThread().getName())
-                print(threadsList[-1])
-                print(threadsList)
-                print("run at finish line")
+    #         print("")
+    #         print(threading.currentThread().getName())
+    #         print(threadsList[-1])
+    #         print(threadsList)
+    #         convert_pdf_to_txt(my_var)
+    #         print(threading.currentThread().getName() + " converting pdf done")
+    #         if threading.currentThread().getName() != threadsList[-1]:
+    #             global raw_text
+    #             raw_text = []
+    #             print("raw_text cleared")
+    #             print(threading.currentThread().getName())
+    #             print(threadsList[-1])
+    #             print(threadsList)
+    #         if threading.currentThread().getName() == threadsList[-1] and split_text != []:
+    #             print(threading.currentThread().getName() + " thread finished without action")
+    #             print(threading.currentThread().getName())
+    #             print(threadsList[-1])
+    #             print(threadsList)
+    #             return
+    #         if threading.currentThread().getName() == threadsList[-1]:
+    #             split(raw_text)
+    #             first_text_clean(split_text)
+    #             second_text_clean(firstCut)
+    #             third_text_clean(secondCut)
+    #             global dataSession
+    #             dataSession = thirdCutList
+    #             # global finished
+    #             # finished = True
+    #             os.remove(my_var)
+    #             print(threading.currentThread().getName())
+    #             print(threadsList[-1])
+    #             print(threadsList)
+    #             print("run at finish line")
 
             
     backgroundRun = threading.Thread(target=fillLists, daemon=True)
