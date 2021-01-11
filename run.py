@@ -208,7 +208,7 @@ def loadingPage():
             if threading.currentThread() == threading.enumerate()[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
                 print(threading.currentThread())
-            print(threading.enumerate()[-1])
+                print(threading.enumerate()[-1])
                 return
             if threading.currentThread() == threading.enumerate()[-1]:
                 split(raw_text)
