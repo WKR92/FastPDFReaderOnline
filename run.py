@@ -203,8 +203,12 @@ def loadingPage():
                 global raw_text
                 raw_text = []
                 print("raw_text cleared")
+                print(threading.currentThread())
+            print(threading.enumerate()[-1])
             if threading.currentThread() == threading.enumerate()[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
+                print(threading.currentThread())
+            print(threading.enumerate()[-1])
                 return
             if threading.currentThread() == threading.enumerate()[-1]:
                 split(raw_text)
@@ -215,7 +219,9 @@ def loadingPage():
                 dataSession = thirdCutList
                 # global finished
                 # finished = True
-                os.remove(my_var)
+                # os.remove(my_var)
+                print(threading.currentThread())
+                print(threading.enumerate()[-1])
                 print("run at finish line")
 
             
