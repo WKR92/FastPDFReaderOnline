@@ -49,8 +49,8 @@ def save_pdf(pdf_form):
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
     # underneath line is for local version
-    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    pdf_path = os.path.join(app.root_path, 'tmp')
+    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    # pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
 
     return pdf_path
@@ -224,17 +224,19 @@ def loadingPage():
     #             print(threading.currentThread())
     #             print(threading.enumerate()[-1])
     #             print("run at finish line")
-    threadsList = []
+    
 
     def fillLists():
+        threadsList = []
         with app.test_request_context():
-            newThread = threading.currentThread().setName(bookTittle)
+            threading.currentThread().setName(bookTittle)
+            newThread = threading.currentThread().getName()
             threadsList.append(newThread)
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
    
             print("")
-            print(threading.currentThread().getName)
+            print(threading.currentThread().getName())
             print(threadsList[-1])
             print(threadsList)
             convert_pdf_to_txt(my_var)
@@ -243,12 +245,12 @@ def loadingPage():
                 global raw_text
                 raw_text = []
                 print("raw_text cleared")
-                print(threading.currentThread().getName)
+                print(threading.currentThread().getName())
                 print(threadsList[-1])
                 print(threadsList)
             if threading.currentThread().getName() == threadsList[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
-                print(threading.currentThread().getName)
+                print(threading.currentThread().getName())
                 print(threadsList[-1])
                 print(threadsList)
                 return
@@ -262,7 +264,7 @@ def loadingPage():
                 # global finished
                 # finished = True
                 os.remove(my_var)
-                print(threading.currentThread().getName)
+                print(threading.currentThread().getName())
                 print(threadsList[-1])
                 print(threadsList)
                 print("run at finish line")
