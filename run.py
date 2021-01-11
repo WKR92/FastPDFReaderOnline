@@ -8,7 +8,6 @@ from pdfminer.high_level import extract_text
 import json
 import time
 import threading
-import multiprocessing
 
 
 db = SQLAlchemy()
@@ -185,12 +184,29 @@ def thread_status():
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage(): 
     my_var = session.get('my_var', None)
+    bookTittle = session.get('bookTittle', None)
     def fillLists():
         with app.test_request_context():
+            threading.currentThread().setName(bookTittle)
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
+            print(threading.currentThread().getName())
+            print(threading.currentThread())
+            print(threading.enumerate())
+            print(threading.enumerate()[-1])
+            print("")
+            print(threading.currentThread())
+            print(threading.enumerate()[-1])
             convert_pdf_to_txt(my_var)
-            if threading.current_thread():
+            print(threading.currentThread().getName() + " converting pdf done")
+            if threading.currentThread() != threading.enumerate()[-1]:
+                global raw_text
+                raw_text = []
+                print("raw_text cleared")
+            if threading.currentThread() == threading.enumerate()[-1] and split_text != []:
+                print(threading.currentThread().getName() + " thread finished without action")
+                return
+            if threading.currentThread() == threading.enumerate()[-1]:
                 split(raw_text)
                 first_text_clean(split_text)
                 second_text_clean(firstCut)
