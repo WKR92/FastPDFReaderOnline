@@ -189,9 +189,17 @@ threadsList = []
 def loadingPage(): 
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
+
+    # global threadsList
+    # threadsList = []
+    # def fillLists():
+
     def fillLists():
         with app.test_request_context():
             threading.currentThread().setName(bookTittle)
+            newThread = threading.currentThread().getName()
+            q.put(newThread)
+            threadsList.append(q.get())
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
    
