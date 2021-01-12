@@ -42,8 +42,8 @@ def save_pdf(pdf_form):
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
     # underneath line is for local version
-    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    pdf_path = os.path.join(app.root_path, 'tmp')
+    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    # pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
 
     return pdf_path
@@ -186,7 +186,7 @@ def loadingPage():
     bookTittle = session.get('bookTittle', None)
 
 
-    # 1st try that does work local but doesnt work on heroku
+    # 1st try that does work localy but doesnt work on heroku
     # def fillLists():
     #     with app.test_request_context():
     #         threading.currentThread().setName(bookTittle)
@@ -226,10 +226,10 @@ def loadingPage():
     #             print("run at finish line")
     
 
-    # 2nd try that does work local but doesnt work on heroku
-    # global threadsList
-    # threadsList = []
+    # 2nd try that does work localy but doesnt work on heroku
+
     # def fillLists():
+    #     global threadsList
         
     #     with app.test_request_context():
     #         threading.currentThread().setName(bookTittle)
@@ -272,16 +272,12 @@ def loadingPage():
     #             print(threadsList[-1])
     #             print(threadsList)
     #             print("run at finish line")
-
-
     
-    global q
-    global threadsList
-    threadsList = []
+    
     def fillLists():
     
-        
-        # 3rd try that does work local but doesnt work on heroku
+        global q
+        # 3rd try that does work localy but doesnt work on heroku
         with app.test_request_context():
             clearLists()
             print(request.url)
@@ -320,7 +316,7 @@ def loadingPage():
                 return
             if threading.currentThread().getName() == deque[-1]:
                 if request.url == "https://fastpdfreader.herokuapp.com":
-                    print(threading.currentThread().getName() + " finished working and does nothing")
+                    print(threading.currentThread().getName() + " finished working and did nothing")
                     os.remove(my_var)
                     return
                 else:
