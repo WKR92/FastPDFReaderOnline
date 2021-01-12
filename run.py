@@ -303,6 +303,9 @@ def loadingPage():
             print(deque)
             convert_pdf_to_txt(my_var)
             print(threading.currentThread().getName() + " converting pdf done")
+            if q.empty():
+                print("Q empty, elem does nothing")
+                return
             if threading.currentThread().getName() != deque[-1]:
                 global raw_text
                 raw_text = []
