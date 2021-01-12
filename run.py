@@ -189,6 +189,7 @@ def loadingPage():
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
+
     # 1st try that does work local but doesnt work on heroku
     # def fillLists():
     #     with app.test_request_context():
@@ -306,11 +307,13 @@ def loadingPage():
             convert_pdf_to_txt(my_var)
             print(threading.currentThread().getName() + " converting pdf done")
             if q.empty():
+                os.remove(my_var)
                 print("Q empty, elem does nothing")
                 return
             if threading.currentThread().getName() != deque[-1]:
                 global raw_text
                 raw_text = []
+                os.remove(my_var)
                 print("raw_text cleared")
                 print(threading.currentThread().getName())
                 print("Last elem in q is: " + deque[-1])
@@ -318,7 +321,7 @@ def loadingPage():
                 return
             if threading.currentThread().getName() == deque[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
-                print(threading.currentThread().getName())
+                os.remove(my_var)
                 return
             if threading.currentThread().getName() == deque[-1]:
                 if request.url == "https://fastpdfreader.herokuapp.com":
