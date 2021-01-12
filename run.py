@@ -288,6 +288,7 @@ def loadingPage():
         
         # 3rd try that does work local but doesnt work on heroku
         with app.test_request_context():
+            print(request.url)
             print(threading.enumerate())
             threading.currentThread().setName(bookTittle) 
             newThread = threading.currentThread().getName()
@@ -332,7 +333,6 @@ def loadingPage():
                     dataSession = thirdCutList
                     os.remove(my_var)
                     print(threading.currentThread().getName() + " run at finish line")
-                    print(request.url)
                     with q.mutex:
                         q.queue.clear()
                     print(deque)
