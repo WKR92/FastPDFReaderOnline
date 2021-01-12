@@ -181,6 +181,8 @@ global q
 q = queue.Queue()
 global threadsList
 threadsList = []
+global thredsNum
+thredsNum = 0
 
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
@@ -283,6 +285,7 @@ def loadingPage():
     global q
     global threadsList
     threadsList = []
+    global thredsNum
     thredsNum = 0
     def fillLists():
     
@@ -322,23 +325,23 @@ def loadingPage():
                 print(threading.currentThread().getName())
                 return
             if threading.currentThread().getName() == deque[-1]:
-                if request.url == "https://fastpdfreader.herokuapp.com":
-                    print(threading.currentThread().getName() + " finished working and does nothing")
-                    return
-                else:
-                    split(raw_text)
-                    first_text_clean(split_text)
-                    second_text_clean(firstCut)
-                    third_text_clean(secondCut)
-                    global dataSession
-                    dataSession = thirdCutList
-                    os.remove(my_var)
-                    print(threading.currentThread().getName())
-                    print("run at finish line")
-                    with q.mutex:
-                        q.queue.clear()
-                    print(deque)
-                    return
+                # if request.url == "https://fastpdfreader.herokuapp.com":
+                #     print(threading.currentThread().getName() + " finished working and does nothing")
+                #     return
+                # else:
+                split(raw_text)
+                first_text_clean(split_text)
+                second_text_clean(firstCut)
+                third_text_clean(secondCut)
+                global dataSession
+                dataSession = thirdCutList
+                os.remove(my_var)
+                print(threading.currentThread().getName())
+                print("run at finish line")
+                with q.mutex:
+                    q.queue.clear()
+                print(deque)
+                return
 
             
     backgroundRun = threading.Thread(target=fillLists)
