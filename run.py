@@ -186,7 +186,6 @@ threadsList = []
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
-    print(request.url)
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
@@ -333,6 +332,7 @@ def loadingPage():
                     dataSession = thirdCutList
                     os.remove(my_var)
                     print(threading.currentThread().getName() + " run at finish line")
+                    print(request.url)
                     with q.mutex:
                         q.queue.clear()
                     print(deque)
