@@ -318,7 +318,7 @@ def loadingPage():
                 print(threading.currentThread().getName())
                 return
             if threading.currentThread().getName() == deque[-1]:
-                if request.url != "https://fastpdfreader.herokuapp.com/loadingPage":
+                if request.url == "https://fastpdfreader.herokuapp.com":
                     print(threading.currentThread().getName() + " finished working and does nothing")
                     return
                 else:
