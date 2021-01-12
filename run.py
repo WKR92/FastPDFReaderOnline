@@ -305,6 +305,7 @@ def loadingPage():
                 print(threading.currentThread().getName())
                 print("Last elem in q is: " + deque[-1])
                 print(deque)
+                return
             if threading.currentThread().getName() == deque[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
                 print(threading.currentThread().getName())
@@ -319,6 +320,10 @@ def loadingPage():
                 os.remove(my_var)
                 print(threading.currentThread().getName())
                 print("run at finish line")
+                with q.mutex:
+                    q.queue.clear()
+                return
+
 
             
     backgroundRun = threading.Thread(target=fillLists, daemon=True)
