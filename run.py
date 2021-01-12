@@ -184,7 +184,8 @@ threadsList = []
 
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
-def loadingPage(): 
+def loadingPage():
+    print(request.url)
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
@@ -317,19 +318,23 @@ def loadingPage():
                 print(threading.currentThread().getName())
                 return
             if threading.currentThread().getName() == deque[-1]:
-                split(raw_text)
-                first_text_clean(split_text)
-                second_text_clean(firstCut)
-                third_text_clean(secondCut)
-                global dataSession
-                dataSession = thirdCutList
-                os.remove(my_var)
-                print(threading.currentThread().getName())
-                print("run at finish line")
-                with q.mutex:
-                    q.queue.clear()
-                print(deque)
-                return
+                if request.url == "https://fastpdfreader.herokuapp.com":
+                    print(threading.currentThread().getName() + " finished working and does nothing")
+                    return
+                else:
+                    split(raw_text)
+                    first_text_clean(split_text)
+                    second_text_clean(firstCut)
+                    third_text_clean(secondCut)
+                    global dataSession
+                    dataSession = thirdCutList
+                    os.remove(my_var)
+                    print(threading.currentThread().getName())
+                    print("run at finish line")
+                    with q.mutex:
+                        q.queue.clear()
+                    print(deque)
+                    return
 
             
     backgroundRun = threading.Thread(target=fillLists)
@@ -342,6 +347,7 @@ def loadingPage():
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
+    print(request.url)
     my_var = session.get('my_var', None)
     data = dataSession
     # bookTittle = tittle_of_book(my_var)
