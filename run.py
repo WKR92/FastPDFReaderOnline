@@ -320,23 +320,22 @@ def loadingPage():
                 print(threading.currentThread().getName())
                 return
             if threading.currentThread().getName() == deque[-1]:
-                # if request.url == "https://fastpdfreader.herokuapp.com":
-                #     print(threading.currentThread().getName() + " finished working and does nothing")
-                #     return
-                # else:
-                split(raw_text)
-                first_text_clean(split_text)
-                second_text_clean(firstCut)
-                third_text_clean(secondCut)
-                global dataSession
-                dataSession = thirdCutList
-                os.remove(my_var)
-                print(threading.currentThread().getName())
-                print("run at finish line")
-                with q.mutex:
-                    q.queue.clear()
-                print(deque)
-                return
+                if request.url == "https://fastpdfreader.herokuapp.com":
+                    print(threading.currentThread().getName() + " finished working and does nothing")
+                    return
+                else:
+                    split(raw_text)
+                    first_text_clean(split_text)
+                    second_text_clean(firstCut)
+                    third_text_clean(secondCut)
+                    global dataSession
+                    dataSession = thirdCutList
+                    os.remove(my_var)
+                    print(threading.currentThread().getName() + " run at finish line")
+                    with q.mutex:
+                        q.queue.clear()
+                    print(deque)
+                    return
 
             
     backgroundRun = threading.Thread(target=fillLists)
@@ -351,12 +350,15 @@ def loadingPage():
 def reader():
     my_var = session.get('my_var', None)
     data = dataSession
-    # bookTittle = tittle_of_book(my_var)
     bookTittle = session.get('bookTittle', None)
     
     flash('Your file is uploaded. Have a nice read.', "success")
 
     return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
+
+
+#command to check how many free dyno hours i have left:
+# heroku ps -a fastpdfreader 
 
 
 # if __name__ == "__main__":
