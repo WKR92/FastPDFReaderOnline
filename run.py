@@ -3,7 +3,6 @@ from forms import UploadPDFForm
 from flask_sqlalchemy import SQLAlchemy
 from pdfminer.high_level import extract_text
 import threading, queue, json, time, os, secrets, re
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 db = SQLAlchemy()
