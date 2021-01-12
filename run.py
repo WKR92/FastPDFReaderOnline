@@ -318,7 +318,7 @@ def loadingPage():
                 print(threading.currentThread().getName())
                 return
             if threading.currentThread().getName() == deque[-1]:
-                if request.url == "https://fastpdfreader.herokuapp.com":
+                if request.url != "https://fastpdfreader.herokuapp.com/loadingPage":
                     print(threading.currentThread().getName() + " finished working and does nothing")
                     return
                 else:
@@ -347,7 +347,6 @@ def loadingPage():
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
-    print(request.url)
     my_var = session.get('my_var', None)
     data = dataSession
     # bookTittle = tittle_of_book(my_var)
@@ -362,4 +361,4 @@ def reader():
 #     app.run(debug=True)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, use_reloader=False)
