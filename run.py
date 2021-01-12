@@ -143,7 +143,7 @@ def home():
     data = []
     global dataSession
     dataSession = ""
-    
+
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
@@ -327,11 +327,12 @@ def loadingPage():
                 print("run at finish line")
                 with q.mutex:
                     q.queue.clear()
+                print("elems in q: " + deque)
                 return
 
-
             
-    backgroundRun = threading.Thread(target=fillLists, daemon=True)
+    backgroundRun = threading.Thread(target=fillLists)
+    backgroundRun.deamon = True
     backgroundRun.start()
     
 
