@@ -283,10 +283,14 @@ def loadingPage():
     global q
     global threadsList
     threadsList = []
+    thredsNum = 0
     def fillLists():
+    
         
         # 3rd try that does work local but doesnt work on heroku
         with app.test_request_context():
+            thredsNum += 1
+            print(thredsNum)
             threading.currentThread().setName(bookTittle) 
             newThread = threading.currentThread().getName()
             q.put(newThread)
