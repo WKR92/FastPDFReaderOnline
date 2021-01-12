@@ -292,6 +292,7 @@ def loadingPage():
         
         # 3rd try that does work local but doesnt work on heroku
         with app.test_request_context():
+            global thredsNum
             thredsNum += 1
             print(thredsNum)
             threading.currentThread().setName(bookTittle) 
