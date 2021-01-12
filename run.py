@@ -326,6 +326,7 @@ def loadingPage():
             if threading.currentThread().getName() == deque[-1]:
                 if request.url == "https://fastpdfreader.herokuapp.com":
                     print(threading.currentThread().getName() + " finished working and does nothing")
+                    os.remove(my_var)
                     return
                 else:
                     split(raw_text)
