@@ -327,7 +327,7 @@ def loadingPage():
                 print("run at finish line")
                 with q.mutex:
                     q.queue.clear()
-                print("elems in q: " + deque)
+                print(deque)
                 return
 
             
