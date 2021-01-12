@@ -34,8 +34,6 @@ global thirdCutList
 thirdCutList = []
 global data
 data = []
-# global finished
-# finished = False
 global dataSession
 dataSession = ""
 
@@ -44,8 +42,8 @@ def save_pdf(pdf_form):
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
     # underneath line is for local version
-    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    # pdf_path = os.path.join(app.root_path, 'tmp')
+    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
 
     return pdf_path
@@ -130,8 +128,6 @@ def clearLists():
     thirdCutList = []
     global data
     data = []
-    # global finished
-    # finished = False
     global dataSession
     dataSession = ""    
 
@@ -271,8 +267,6 @@ def loadingPage():
     #             third_text_clean(secondCut)
     #             global dataSession
     #             dataSession = thirdCutList
-    #             # global finished
-    #             # finished = True
     #             os.remove(my_var)
     #             print(threading.currentThread().getName())
     #             print(threadsList[-1])
@@ -289,6 +283,7 @@ def loadingPage():
         
         # 3rd try that does work local but doesnt work on heroku
         with app.test_request_context():
+            clearLists()
             print(request.url)
             print(threading.enumerate())
             threading.currentThread().setName(bookTittle) 
