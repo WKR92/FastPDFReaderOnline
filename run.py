@@ -139,10 +139,22 @@ def clearLists():
 @app.route('/', methods=['GET', 'POST', 'PUT'])
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
+    global raw_text
+    raw_text = []
+    global split_text
+    split_text = []
+    global firstCut
+    firstCut = []
+    global secondCut
+    secondCut = []
+    global thirdCutList
+    thirdCutList = []
     global data
     data = []
+    # global finished
+    # finished = False
     global dataSession
-    dataSession = ""
+    dataSession = "" 
 
     form = UploadPDFForm()
     if form.validate_on_submit():

@@ -18,7 +18,7 @@ var child = class Child extends React.Component {
     render(){
       return (
         e('div', {className:""},
-        e('h1', {className:"text-center mb-3 mt-3"}, "Loading time depends on the size of your PDF file. It can take up to minute or two."),
+        e('h1', {className:"text-center mb-3 mt-3"}, "Loading time depends on the size of your PDF file. It can take up to few minutes."),
         e('div', {className:"loadIcon mt-5 mb-5 text-center"}, ''),
         e('div', {className:"d-inline-block w-100 m-auto"},
         e('p', {className:"text-center d-block m-auto w-25 font-weight-bold"}, "Time of loading: " + this.props.Sec + " sec"),
