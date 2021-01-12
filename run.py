@@ -1,13 +1,9 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, Blueprint, flash, session, jsonify, current_app
 from forms import UploadPDFForm
 from flask_sqlalchemy import SQLAlchemy
-import os
-import secrets
-import re
 from pdfminer.high_level import extract_text
-import json
-import time
-import threading, queue
+import threading, queue, json, time, os, secrets, re
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 db = SQLAlchemy()
@@ -190,7 +186,7 @@ def loadingPage():
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
-    # 1st try that does work localu but doesnt work on heroku
+    # 1st try that does work local but doesnt work on heroku
     # def fillLists():
     #     with app.test_request_context():
     #         threading.currentThread().setName(bookTittle)
@@ -230,7 +226,7 @@ def loadingPage():
     #             print("run at finish line")
     
 
-    # 2st try that does work localu but doesnt work on heroku
+    # 2nd try that does work local but doesnt work on heroku
     # global threadsList
     # threadsList = []
     # def fillLists():
@@ -279,26 +275,27 @@ def loadingPage():
     #             print(threadsList)
     #             print("run at finish line")
 
+
+    
     global q
     global threadsList
     threadsList = []
     def fillLists():
         
-
+        # 3rd try that does work local but doesnt work on heroku
         with app.test_request_context():
             threading.currentThread().setName(bookTittle)
             newThread = threading.currentThread().getName()
             q.put(newThread)
+            # q.queue tworzy deque object (kopie q) z możliwością podglądania q
             deque = q.queue
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
    
             print("")
             print(threading.currentThread().getName())
-            # print(threadsList[-1])
-            # print(threadsList)
             print(q.qsize())
-            print(deque[-1])
+            print("Last elem in q is: " + deque[-1])
             print(deque)
             convert_pdf_to_txt(my_var)
             print(threading.currentThread().getName() + " converting pdf done")
@@ -307,15 +304,11 @@ def loadingPage():
                 raw_text = []
                 print("raw_text cleared")
                 print(threading.currentThread().getName())
-                print(deque[-1])
+                print("Last elem in q is: " + deque[-1])
                 print(deque)
-                # print(threadsList[-1])
-                # print(threadsList)
             if threading.currentThread().getName() == deque[-1] and split_text != []:
                 print(threading.currentThread().getName() + " thread finished without action")
                 print(threading.currentThread().getName())
-                # print(threadsList[-1])
-                # print(threadsList)
                 return
             if threading.currentThread().getName() == deque[-1]:
                 split(raw_text)
@@ -324,12 +317,8 @@ def loadingPage():
                 third_text_clean(secondCut)
                 global dataSession
                 dataSession = thirdCutList
-                # global finished
-                # finished = True
                 os.remove(my_var)
                 print(threading.currentThread().getName())
-                # print(threadsList[-1])
-                # print(threadsList)
                 print("run at finish line")
 
             
