@@ -139,6 +139,7 @@ def clearLists():
 @app.route('/', methods=['GET', 'POST', 'PUT'])
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
+    print(request.url)
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
