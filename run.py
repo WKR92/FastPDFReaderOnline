@@ -181,8 +181,6 @@ global q
 q = queue.Queue()
 global threadsList
 threadsList = []
-global thredsNum
-thredsNum = 0
 
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
@@ -285,16 +283,12 @@ def loadingPage():
     global q
     global threadsList
     threadsList = []
-    global thredsNum
-    thredsNum = 0
     def fillLists():
     
         
         # 3rd try that does work local but doesnt work on heroku
         with app.test_request_context():
-            global thredsNum
-            thredsNum += 1
-            print(thredsNum)
+            print(threading.enumerate())
             threading.currentThread().setName(bookTittle) 
             newThread = threading.currentThread().getName()
             q.put(newThread)
