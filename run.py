@@ -300,7 +300,7 @@ def loadingPage():
         
         # 3rd try that does work local but doesnt work on heroku
         with app.test_request_context():
-            threading.currentThread().setName(bookTittle)
+            threading.currentThread().setName(bookTittle) 
             newThread = threading.currentThread().getName()
             q.put(newThread)
             # q.queue tworzy deque object (kopie q) z możliwością podglądania q
