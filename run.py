@@ -326,6 +326,7 @@ def loadingPage():
                     third_text_clean(secondCut)
                     global dataSession
                     dataSession = thirdCutList
+                    time.sleep(3)
                     # os.remove(my_var)
                     print(threading.currentThread().getName() + " run at finish line")
                     with q.mutex:
