@@ -119,13 +119,11 @@
           "{{ url_for('thread_status') }}",
           function(run) {
             if (run.status == 'finished') {
-              setTimeout(function(){
-                window.location.replace("{{ url_for('reader') }}");
-              }, 3000);
-        }
-      }
-    )}
-  , 1000);
+              window.location.replace("{{ url_for('reader') }}");
+            }
+          }
+        )}
+      , 1000);
     }
   });
 </script>
