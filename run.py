@@ -344,14 +344,15 @@ def loadingPage():
 
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
-def reader():
+async def reader():
     global dataSession
-    data = dataSession
+    data = await dataSession
     print(data)
     bookTittle = session.get('bookTittle', None)
     flash('Your file is uploaded. Have a nice read.', "success")
-
-    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
+    
+    if data != []:
+        return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
 
 #command to check how many free dyno hours i have left:
