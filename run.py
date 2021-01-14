@@ -345,6 +345,7 @@ def loadingPage():
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
+    global dataSession
     data = dataSession
     print(data)
     bookTittle = session.get('bookTittle', None)
