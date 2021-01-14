@@ -129,7 +129,8 @@ def clearLists():
     global data
     data = []
     global dataSession
-    dataSession = ""    
+    dataSession = ""
+    print("Lists cleared") 
 
 
 @app.route('/', methods=['GET', 'POST', 'PUT'])
@@ -183,6 +184,7 @@ threadsList = []
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
+    print(dataSession)
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
