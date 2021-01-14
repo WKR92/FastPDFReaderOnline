@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, flash, redirect, request, Blu
 from forms import UploadPDFForm
 from flask_sqlalchemy import SQLAlchemy
 from pdfminer.high_level import extract_text
-import threading, queue, json, time, os, secrets, re
+import threading, queue, json, time, os, secrets, re, asyncio
 
 
 db = SQLAlchemy()
@@ -331,7 +331,7 @@ def loadingPage():
                     third_text_clean(secondCut)
                     global dataSession
                     dataSession = thirdCutList
-                    os.remove(my_var)
+                    # os.remove(my_var)
                     print(threading.currentThread().getName() + " run at finish line")
                     with q.mutex:
                         q.queue.clear()
@@ -352,9 +352,9 @@ def reader():
     my_var = session.get('my_var', None)
     data = dataSession
     bookTittle = session.get('bookTittle', None)
-    def check_if_data_not_empty():
+    async def check_if_data_not_empty():
         if data != '':
-            print("data ready")
+            await print("data ready")
     check_if_data_not_empty()
     flash('Your file is uploaded. Have a nice read.', "success")
 
