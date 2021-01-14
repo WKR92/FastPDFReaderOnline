@@ -136,7 +136,11 @@ def clearLists():
 @app.route('/', methods=['GET', 'POST', 'PUT'])
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
-    print(request.url)
+    # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
+    checkIfListsAreEmpty = threading.Thread(target=clearLists(), daemon=True)
+    checkIfListsAreEmpty.run()
+    print("homr url is: " + request.url)
+
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
@@ -144,10 +148,6 @@ def home():
             bookTittle = tittle_of_book(form.pdfFile.data)
             session['my_var'] = pdf_file
             session['bookTittle'] = bookTittle
-
-            # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
-            checkIfListsAreEmpty = threading.Thread(target=clearLists(), daemon=True)
-            checkIfListsAreEmpty.run()
         
         return redirect(url_for('loadingPage'))
             
