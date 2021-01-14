@@ -346,7 +346,8 @@ def loadingPage():
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 async def reader():
     global dataSession
-    data = await dataSession
+    data = dataSession
+    await data != []
     print(data)
     bookTittle = session.get('bookTittle', None)
     flash('Your file is uploaded. Have a nice read.', "success")
