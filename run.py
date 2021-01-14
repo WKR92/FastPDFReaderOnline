@@ -145,7 +145,8 @@ def home():
             session['bookTittle'] = bookTittle
 
             # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
-            clearLists()
+            checkIfListsAreEmpty = threading.Thread(target=clearLists(), daemon=True)
+            checkIfListsAreEmpty.run()
         
         return redirect(url_for('loadingPage'))
             
@@ -182,11 +183,6 @@ threadsList = []
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
-    global dataSession
-    if dataSession != '':
-        clearLists()
-    else:
-        pass
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
@@ -352,11 +348,11 @@ def reader():
     my_var = session.get('my_var', None)
     data = dataSession
     bookTittle = session.get('bookTittle', None)
-    def check_if_data_not_empty():
+    def check_if_data_empty():
         if data != '':
             print("data ready")
-    x = threading.Thread(target=check_if_data_not_empty())
-    x.start()
+    isDataEmpty = threading.Thread(target=check_if_data_empty())
+    isDataEmpty.start()
     flash('Your file is uploaded. Have a nice read.', "success")
 
     return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
