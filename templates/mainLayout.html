@@ -77,17 +77,6 @@
   <script>
     var data = {{ data|safe }}
     var bookTitle = {{ bookTitle|safe }}
-    
-    var refresh_id;
-    $(document).ready(function() {
-      if(document.getElementById("icon")){
-        refresh_id = setInterval(function() {
-          if (data.length !== 0) {
-            window.location.replace("{{ url_for('reader') }}");
-          }
-        }, 1000);
-      }
-    });
 
     $(document).ready(function(){
       if(document.getElementById("NoJsx")){
@@ -138,6 +127,17 @@
   // , 1000);
   //   }
   // });
+
+  var refresh_id;
+    $(document).ready(function() {
+      if(document.getElementById("icon")){
+        refresh_id = setInterval(function() {
+          if (data.length !== 0) {
+            window.location.replace("{{ url_for('reader') }}");
+          }
+        }, 1000);
+      }
+    });
 </script>
 
 <script>
