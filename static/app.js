@@ -487,7 +487,7 @@ const mainInt = class MainInterval extends React.Component {
      }
    }
 async function startReader(){
-  dataCheck = await data.length !== 0
+  dataCheck = await data.length !== 0;
   if(dataCheck){
     const domContainer = document.querySelector('#NoJsx');
     ReactDOM.render(e(mainInt), domContainer);
