@@ -2,7 +2,8 @@ from flask import Flask, render_template, url_for, flash, redirect, request, Blu
 from forms import UploadPDFForm
 from flask_sqlalchemy import SQLAlchemy
 from pdfminer.high_level import extract_text
-import threading, queue, json, time, os, secrets, re, asyncio
+import threading, queue, json, time, os, secrets, re
+
 
 
 db = SQLAlchemy()
@@ -47,20 +48,6 @@ def save_pdf(pdf_form):
     pdf_form.save(pdf_path)
 
     return pdf_path
-
-
-# local version of tittle_of_book def
-# def tittle_of_book(pdf_path):
-#     parts = []
-#     path = pdf_path
-#     cut = path.split("\\")
-#     cut = path.split("/")
-#     parts.append(cut)
-#     tittle = parts[0][-1]
-#     ready_tittle = tittle[:-4]
-#     ready_tittle_pretty_cut = ready_tittle.replace("_", " ")
-#     pretty_tittle = ready_tittle_pretty_cut.replace("  ", " ")
-#     return pretty_tittle
 
 
 def tittle_of_book(pdf_form):
@@ -144,6 +131,7 @@ def home():
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
+            clearLists()
             pdf_file = save_pdf(form.pdfFile.data)
             bookTittle = tittle_of_book(form.pdfFile.data)
             session['my_var'] = pdf_file
@@ -172,7 +160,6 @@ def loadReader():
 def thread_status():
     """ Return the status of the worker thread """
     global dataSession
-    print(dataSession)
     return jsonify(dict(status=('finished' if len(dataSession) > 1 else 'running')))
 
 
@@ -183,12 +170,13 @@ q = queue.Queue()
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
+    clearLists()
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
+    global q
     
     def fillLists():
     
-        global q
         # 3rd try that does work localy but doesnt work on heroku
         with app.test_request_context():
             print(request.url)
@@ -200,7 +188,6 @@ def loadingPage():
             deque = q.queue
             print("backgroundRun started")
             print("Ilość działających threadów to: " + str(threading.active_count()))
-   
             print("")
             print(threading.currentThread().getName())
             print(q.qsize())
