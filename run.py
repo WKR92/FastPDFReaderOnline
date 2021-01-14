@@ -184,7 +184,7 @@ threadsList = []
 def loadingPage():
     global dataSession
     if dataSession != '':
-        dataSession = ''
+        clearLists()
     else:
         pass
     my_var = session.get('my_var', None)
