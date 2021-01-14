@@ -183,6 +183,7 @@ threadsList = []
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
+    clearLists()
     print(dataSession)
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
