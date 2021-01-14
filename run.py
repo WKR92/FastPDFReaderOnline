@@ -351,9 +351,8 @@ async def reader():
     print(data)
     bookTittle = session.get('bookTittle', None)
     flash('Your file is uploaded. Have a nice read.', "success")
-    
-    if data != []:
-        return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
+
+    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
 
 #command to check how many free dyno hours i have left:
