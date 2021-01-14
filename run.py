@@ -347,11 +347,11 @@ def reader():
     my_var = session.get('my_var', None)
     data = dataSession
     bookTittle = session.get('bookTittle', None)
-    def check_if_data_empty():
-        if data != '':
-            print("data ready")
-    isDataEmpty = threading.Thread(target=check_if_data_empty())
-    isDataEmpty.start()
+    # def check_if_data_empty():
+    #     if data != '':
+    #         print("data ready")
+    # isDataEmpty = threading.Thread(target=check_if_data_empty())
+    # isDataEmpty.start()
     flash('Your file is uploaded. Have a nice read.', "success")
 
     return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
