@@ -119,7 +119,9 @@
           "{{ url_for('thread_status') }}",
           function(run) {
             if (run.status == 'finished') {
-              window.location.replace("{{ url_for('reader') }}");
+              setTimeout(function(){
+                window.location.replace("{{ url_for('reader') }}");
+              }, 3000);
         }
       }
     )}

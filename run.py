@@ -315,6 +315,7 @@ def loadingPage():
                 os.remove(my_var)
                 return
             if threading.currentThread().getName() == deque[-1]:
+                print(request.url)
                 if request.url == "https://fastpdfreader.herokuapp.com":
                     print(threading.currentThread().getName() + " finished working and did nothing")
                     os.remove(my_var)
@@ -326,7 +327,6 @@ def loadingPage():
                     third_text_clean(secondCut)
                     global dataSession
                     dataSession = thirdCutList
-                    time.sleep(3)
                     # os.remove(my_var)
                     print(threading.currentThread().getName() + " run at finish line")
                     with q.mutex:
