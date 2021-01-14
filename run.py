@@ -42,8 +42,8 @@ def save_pdf(pdf_form):
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
     # underneath line is for local version
-    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    pdf_path = os.path.join(app.root_path, 'tmp')
+    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    # pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
 
     return pdf_path
@@ -171,8 +171,7 @@ def loadReader():
 def thread_status():
     """ Return the status of the worker thread """
     global dataSession
-    data = dataSession
-    return jsonify(dict(status=('finished' if data != '' else 'running')))
+    return jsonify(dict(status=('finished' if dataSession != '' else 'running')))
 
 
 # Queue to handle threads
@@ -344,15 +343,12 @@ def loadingPage():
 
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
-async def reader():
+def reader():
     global dataSession
-    data = dataSession
-    await data != []
-    print(data)
     bookTittle = session.get('bookTittle', None)
     flash('Your file is uploaded. Have a nice read.', "success")
 
-    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
+    return render_template('reader.html', title='Web Reader', data=json.dumps(dataSession), bookTitle = json.dumps(bookTittle))
 
 
 #command to check how many free dyno hours i have left:
