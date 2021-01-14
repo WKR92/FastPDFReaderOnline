@@ -172,7 +172,7 @@ def loadReader():
 def thread_status():
     """ Return the status of the worker thread """
     global dataSession
-    return jsonify(dict(status=('finished' if dataSession.length > 500 else 'running')))
+    return jsonify(dict(status=('finished' if len(dataSession) > 500 else 'running')))
 
 
 # Queue to handle threads
