@@ -129,8 +129,9 @@ def clearLists():
     global data
     data = []
     global dataSession
-    dataSession = ""
-    print("Lists cleared") 
+    dataSession = []
+    print("Lists cleared")
+    print(dataSession)
 
 
 @app.route('/', methods=['GET', 'POST', 'PUT'])
@@ -171,109 +172,18 @@ def loadReader():
 def thread_status():
     """ Return the status of the worker thread """
     global dataSession
-    return jsonify(dict(status=('finished' if dataSession != '' else 'running')))
+    return jsonify(dict(status=('finished' if dataSession != [] else 'running')))
 
 
 # Queue to handle threads
 global q
 q = queue.Queue()
-global threadsList
-threadsList = []
 
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
-
-
-    # 1st try that does work localy but doesnt work on heroku
-    # def fillLists():
-    #     with app.test_request_context():
-    #         threading.currentThread().setName(bookTittle)
-    #         print("backgroundRun started")
-    #         print("Ilość działających threadów to: " + str(threading.active_count()))
-   
-    #         print("")
-    #         print(threading.currentThread())
-    #         print(threading.enumerate()[-1])
-    #         print(threading.enumerate())
-    #         convert_pdf_to_txt(my_var)
-    #         print(threading.currentThread().getName() + " converting pdf done")
-    #         if threading.currentThread() != threading.enumerate()[-1]:
-    #             global raw_text
-    #             raw_text = []
-    #             print("raw_text cleared")
-    #             print(threading.currentThread())
-    #             print(threading.enumerate()[-1])
-    #             print(threading.enumerate())
-    #         print(threading.enumerate()[-1])
-    #         if threading.currentThread() == threading.enumerate()[-1] and split_text != []:
-    #             print(threading.currentThread().getName() + " thread finished without action")
-    #             print(threading.currentThread())
-    #             print(threading.enumerate()[-1])
-    #             print(threading.enumerate())
-    #             return
-    #         if threading.currentThread() == threading.enumerate()[-1]:
-    #             split(raw_text)
-    #             first_text_clean(split_text)
-    #             second_text_clean(firstCut)
-    #             third_text_clean(secondCut)
-    #             global dataSession
-    #             dataSession = thirdCutList
-    #             os.remove(my_var)
-    #             print(threading.currentThread())
-    #             print(threading.enumerate()[-1])
-    #             print("run at finish line")
-    
-
-    # 2nd try that does work localy but doesnt work on heroku
-
-    # def fillLists():
-    #     global threadsList
-        
-    #     with app.test_request_context():
-    #         threading.currentThread().setName(bookTittle)
-    #         newThread = threading.currentThread().getName()
-    #         q.put(newThread)
-    #         threadsList.append(q.get())
-    #         print("backgroundRun started")
-    #         print("Ilość działających threadów to: " + str(threading.active_count()))
-   
-    #         print("")
-    #         print(threading.currentThread().getName())
-    #         print(threadsList[-1])
-    #         print(threadsList)
-    #         print(q.qsize())
-            
-    #         convert_pdf_to_txt(my_var)
-    #         print(threading.currentThread().getName() + " converting pdf done")
-    #         if threading.currentThread().getName() != threadsList[-1]:
-    #             global raw_text
-    #             raw_text = []
-    #             print("raw_text cleared")
-    #             print(threading.currentThread().getName())
-    #             print(threadsList[-1])
-    #             print(threadsList)
-    #         if threading.currentThread().getName() == threadsList[-1] and split_text != []:
-    #             print(threading.currentThread().getName() + " thread finished without action")
-    #             print(threading.currentThread().getName())
-    #             print(threadsList[-1])
-    #             print(threadsList)
-    #             return
-    #         if threading.currentThread().getName() == threadsList[-1]:
-    #             split(raw_text)
-    #             first_text_clean(split_text)
-    #             second_text_clean(firstCut)
-    #             third_text_clean(secondCut)
-    #             global dataSession
-    #             dataSession = thirdCutList
-    #             os.remove(my_var)
-    #             print(threading.currentThread().getName())
-    #             print(threadsList[-1])
-    #             print(threadsList)
-    #             print("run at finish line")
-    
     
     def fillLists():
     
