@@ -137,8 +137,7 @@ def clearLists():
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
     # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
-    checkIfListsAreEmpty = threading.Thread(target=clearLists(), daemon=True)
-    checkIfListsAreEmpty.run()
+    clearLists()
     print("homr url is: " + request.url)
 
     form = UploadPDFForm()
