@@ -138,7 +138,7 @@ def clearLists():
 def home():
     # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
     clearLists()
-    print("homr url is: " + request.url)
+    print("home url is: " + request.url)
 
     form = UploadPDFForm()
     if form.validate_on_submit():
@@ -281,7 +281,6 @@ def loadingPage():
         global q
         # 3rd try that does work localy but doesnt work on heroku
         with app.test_request_context():
-            clearLists()
             print(request.url)
             print(threading.enumerate())
             threading.currentThread().setName(bookTittle) 
