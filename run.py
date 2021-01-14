@@ -131,7 +131,6 @@ def home():
     form = UploadPDFForm()
     if form.validate_on_submit():
         if form.pdfFile.data:
-            clearLists()
             pdf_file = save_pdf(form.pdfFile.data)
             bookTittle = tittle_of_book(form.pdfFile.data)
             session['my_var'] = pdf_file
@@ -170,7 +169,6 @@ q = queue.Queue()
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
-    clearLists()
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
     global q
