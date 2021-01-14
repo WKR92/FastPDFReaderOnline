@@ -136,8 +136,6 @@ def clearLists():
 @app.route('/', methods=['GET', 'POST', 'PUT'])
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
-    # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
-    clearLists()
     print("home url is: " + request.url)
 
     form = UploadPDFForm()
@@ -183,8 +181,8 @@ threadsList = []
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
+    # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
     clearLists()
-    print(dataSession)
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 

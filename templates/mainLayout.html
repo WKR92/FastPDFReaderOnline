@@ -78,12 +78,16 @@
     var data = {{ data|safe }}
     var bookTitle = {{ bookTitle|safe }}
     
-    // previuos version for loading app.js
-    // $(document).ready(function(){
-    //   $("#start_btn").one("noJSX", function(){
-    //     $.getScript("{{url_for('static', filename='app.js')}}")
-    //   });
-    // });
+    var refresh_id;
+    $(document).ready(function() {
+      if(document.getElementById("icon")){
+        refresh_id = setInterval(function() {
+          if (data.length !== 'finished') {
+            window.location.replace("{{ url_for('reader') }}");
+          }
+        }, 1000);
+      }
+    });
 
     $(document).ready(function(){
       if(document.getElementById("NoJsx")){
@@ -119,21 +123,21 @@
   </script>
 
 <script>
-  var refresh_id;
-  $(document).ready(function() {
-    if(document.getElementById("icon")){
-      refresh_id = setInterval(function() {
-        $.get(
-          "{{ url_for('thread_status') }}",
-          function(run) {
-            if (run.status == 'finished') {
-              window.location.replace("{{ url_for('reader') }}");
-        }
-      }
-    )}
-  , 1000);
-    }
-  });
+  // var refresh_id;
+  // $(document).ready(function() {
+  //   if(document.getElementById("icon")){
+  //     refresh_id = setInterval(function() {
+  //       $.get(
+  //         "{{ url_for('thread_status') }}",
+  //         function(run) {
+  //           if (run.status == 'finished') {
+  //             window.location.replace("{{ url_for('reader') }}");
+  //       }
+  //     }
+  //   )}
+  // , 1000);
+  //   }
+  // });
 </script>
 
 <script>
