@@ -172,7 +172,7 @@ def loadReader():
 def thread_status():
     """ Return the status of the worker thread """
     global dataSession
-    return jsonify(dict(status=('finished' if dataSession != [] else 'running')))
+    return jsonify(dict(status=('finished' if dataSession.length > 500 else 'running')))
 
 
 # Queue to handle threads
@@ -236,12 +236,12 @@ def loadingPage():
                     second_text_clean(firstCut)
                     third_text_clean(secondCut)
                     global dataSession
-                    dataSession = thirdCutList
                     # os.remove(my_var)
                     print(threading.currentThread().getName() + " run at finish line")
                     with q.mutex:
                         q.queue.clear()
                     print(deque)
+                    dataSession = thirdCutList
                     return
 
             
