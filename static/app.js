@@ -486,11 +486,12 @@ const mainInt = class MainInterval extends React.Component {
        );
      }
    }
-function startReader(){
-  if(data.length !== 0){
+async function startReader(){
+  dataCheck = await data.length !== 0
+  if(dataCheck){
     const domContainer = document.querySelector('#NoJsx');
     ReactDOM.render(e(mainInt), domContainer);
-  } else if(window.location.href === "http://127.0.0.1:5000/loadReader" && data.length === 0){
+  } else if(window.location.href === "http://127.0.0.1:5000/loadReader" && data.length === 0 || window.location.href === "https://fastpdfreader.herokuapp.com/loadReader" && data.length === 0){
     const domContainer = document.querySelector('#NoJsx');
     ReactDOM.render(e(mainInt), domContainer);
   }
