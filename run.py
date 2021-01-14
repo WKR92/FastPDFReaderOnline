@@ -172,7 +172,7 @@ def loadReader():
 def thread_status():
     """ Return the status of the worker thread """
     global dataSession
-    return jsonify(dict(status=('finished' if len(dataSession) == len(secondCut)/2 else 'running')))
+    return jsonify(dict(status=('finished' if dataSession != [] else 'running')))
 
 
 # Queue to handle threads
@@ -236,12 +236,13 @@ def loadingPage():
                     second_text_clean(firstCut)
                     third_text_clean(secondCut)
                     global dataSession
+                    dataSession = thirdCutList
                     # os.remove(my_var)
                     print(threading.currentThread().getName() + " run at finish line")
                     with q.mutex:
                         q.queue.clear()
                     print(deque)
-                    dataSession = thirdCutList
+                    
                     return
 
             
@@ -255,14 +256,12 @@ def loadingPage():
 
 @app.route('/reader', methods=['GET', 'POST', 'PUT'])
 def reader():
-    def putTextIntoData():
-        global dataSession
-        data = dataSession
-        return data
+    global dataSession
+    data = dataSession
     bookTittle = session.get('bookTittle', None)
     flash('Your file is uploaded. Have a nice read.', "success")
 
-    return render_template('reader.html', title='Web Reader', data=json.dumps(putTextIntoData()), bookTitle = json.dumps(bookTittle))
+    return render_template('reader.html', title='Web Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
 
 #command to check how many free dyno hours i have left:
