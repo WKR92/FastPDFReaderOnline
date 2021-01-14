@@ -42,8 +42,8 @@ def save_pdf(pdf_form):
     f_name, f_ext = os.path.splitext(pdf_form.filename)
     pdf_fn = f_name + f_ext
     # underneath line is for local version
-    pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
-    # pdf_path = os.path.join(app.root_path, 'tmp')
+    # pdf_path = os.path.join(app.root_path, 'static/user_pdf', pdf_fn)
+    pdf_path = os.path.join(app.root_path, 'tmp')
     pdf_form.save(pdf_path)
 
     return pdf_path
@@ -136,6 +136,8 @@ def clearLists():
 @app.route('/', methods=['GET', 'POST', 'PUT'])
 @app.route('/home', methods=['GET', 'POST','PUT'])
 def home():
+    # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
+    clearLists()
     print("home url is: " + request.url)
 
     form = UploadPDFForm()
@@ -168,6 +170,7 @@ def loadReader():
 @app.route('/status')
 def thread_status():
     """ Return the status of the worker thread """
+    global dataSession
     data = dataSession
     return jsonify(dict(status=('finished' if data != '' else 'running')))
 
@@ -181,8 +184,6 @@ threadsList = []
 
 @app.route('/loadingPage', methods=['GET', 'POST', 'PUT'])
 def loadingPage():
-    # Poniższa funkcja oczyszcza listy przed załadowaniem do nich nowego tekstu
-    clearLists()
     my_var = session.get('my_var', None)
     bookTittle = session.get('bookTittle', None)
 
