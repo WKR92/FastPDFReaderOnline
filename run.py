@@ -32,8 +32,6 @@ global secondCut
 secondCut = []
 global thirdCutList
 thirdCutList = []
-global data
-data = []
 global dataSession
 dataSession = ""
 
@@ -168,13 +166,6 @@ def loadReader():
     return render_template('loadReader.html', title='Web_Reader', data=json.dumps(data), bookTitle = json.dumps(bookTittle))
 
 
-@app.route('/status')
-def thread_status():
-    """ Return the status of the worker thread """
-    global dataSession
-    return jsonify(dict(status=('finished' if dataSession != [] else 'running')))
-
-
 # Queue to handle threads
 global q
 q = queue.Queue()
@@ -263,6 +254,13 @@ def reader():
     flash('Your file is uploaded. Have a nice read.', "success")
 
     return render_template('reader.html', title='Web Reader', data=json.dumps(putTextIntoData()), bookTitle = json.dumps(bookTittle))
+
+
+@app.route('/status')
+def thread_status():
+    """ Return the status of the worker thread """
+    global dataSession
+    return jsonify(dict(status=('finished' if dataSession != [] else 'running')))
 
 
 #command to check how many free dyno hours i have left:
