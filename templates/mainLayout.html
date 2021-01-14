@@ -82,7 +82,7 @@
     $(document).ready(function() {
       if(document.getElementById("icon")){
         refresh_id = setInterval(function() {
-          if (data.length !== 'finished') {
+          if (data.length !== 0) {
             window.location.replace("{{ url_for('reader') }}");
           }
         }, 1000);
