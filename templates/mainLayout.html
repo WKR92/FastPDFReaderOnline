@@ -66,7 +66,7 @@
   <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>  
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-  <!-- Load our React component. -->
+  <!-- variables for loadReader -->
   <script type="text/javascript">
     var data = {{ data|safe }}
     var bookTitle = {{ bookTitle|safe }}
@@ -87,7 +87,6 @@
     $(document).ready(function(){
       $("#alert").delay(5000).slideUp(300);
     });
-
   </script>
 
   <!-- <script>
@@ -112,32 +111,32 @@
   </script>
 
 <script>
-  // var refresh_id;
-  // $(document).ready(function() {
-  //   if(document.getElementById("icon")){
-  //     refresh_id = setInterval(function() {
-  //       $.get(
-  //         "{{ url_for('thread_status') }}",
-  //         function(run) {
-  //           if (run.status == 'finished') {
-  //             window.location.replace("{{ url_for('reader') }}");
-  //       }
-  //     }
-  //   )}
-  // , 1000);
-  //   }
-  // });
-
   var refresh_id;
-    $(document).ready(function() {
-      if(document.getElementById("icon")){
-        refresh_id = setInterval(function() {
-          if (data.length !== 0) {
-            window.location.replace("{{ url_for('reader') }}");
-          }
-        }, 1000);
+  $(document).ready(function() {
+    if(document.getElementById("icon")){
+      refresh_id = setInterval(function() {
+        $.get(
+          "{{ url_for('thread_status') }}",
+          function(run) {
+            if (run.status == 'finished') {
+              window.location.replace("{{ url_for('reader') }}");
+        }
       }
-    });
+    )}
+  , 1000);
+    }
+  });
+
+  // var refresh_id;
+  //   $(document).ready(function() {
+  //     if(document.getElementById("icon")){
+  //       refresh_id = setInterval(function() {
+  //         if (1=1) {
+  //           window.location.replace("{{ url_for('reader') }}");
+  //         }
+  //       }, 1000);
+  //     }
+  //   });
 </script>
 
 <script>
